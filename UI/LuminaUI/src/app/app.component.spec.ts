@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'LuminaUI' title`, () => {
+  it(`should have the 'Lumina' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('LuminaUI');
+    expect(app.title).toEqual('Lumina');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, LuminaUI');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, Lumina');
   });
 });
