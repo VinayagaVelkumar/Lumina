@@ -1,0 +1,22 @@
+<div class="square-box">
+<mat-grid-list cols="4" rowHeight="2:1" style="width: 100%;">
+@for (product of Products; track product._id) {
+  <mat-grid-tile>
+<mat-card>
+  <mat-card-header>
+    <img mat-card-image style="height: 200px;width: 320px;" src="../../../assets/{{product.Image}}.png" alt={{product.ProductName}}>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-card-title>{{product.ProductName}}</mat-card-title>
+    <mat-card-subtitle>{{product.ProductID}}</mat-card-subtitle>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>View</button>
+  </mat-card-actions>
+</mat-card>
+</mat-grid-tile>
+} @empty {
+  <span>Empty list of users</span>
+}
+</mat-grid-list>
+</div>

@@ -1,0 +1,13 @@
+  .square-box {
+    width: 95%; 
+    height:100%;
+    background-color: #e6e6e6;
+    box-shadow: 0 0 10px 5px #000;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+  
+  mat-card {
+    width: 420px;
+    height: 420px;
+  }

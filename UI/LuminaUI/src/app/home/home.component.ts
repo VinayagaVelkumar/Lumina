@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { ProductlistComponent } from '../pms/productlist/productlist.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatToolbarModule,MatButtonModule],
+  imports: [NavbarComponent,ProductlistComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
