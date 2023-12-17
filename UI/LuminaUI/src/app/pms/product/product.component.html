@@ -1,0 +1,17 @@
+<div style="text-align: center;" class="pcontainer">
+<div style="text-align: center;" class="product-container">
+    <ngx-slick-carousel class="image-carousel" [config]="slickConfig">
+        @for (slide of productImages; track slide) {
+            <div ngxSlickItem style="text-align: center;" class="slide">
+                  <img style="text-align: center;width: 420px;" src="../../../assets/{{slide}}.png" alt="">
+            </div>
+    }
+      </ngx-slick-carousel>
+
+    <div class="product-details">
+        <h1>{{receivedValue}}</h1>
+        <p class="price">$99.99</p>
+        <button class="bbutton"(click)="goToHome()">Back</button>
+    </div>
+</div>
+</div>

@@ -1,14 +1,14 @@
-<mat-toolbar style="margin-bottom: 20px;" color="primary">
-    <button mat-button routerLink="/">Home</button>
+<mat-toolbar style="margin-bottom: 20px" color="primary">
+    <button mat-button (click)="navtoHome()">Home</button>
     <button class="NavButton" mat-button routerLink="/purchase">Purchase</button>
     <button class="NavButton" mat-button routerLink="/sale">Sale</button>
 
     
   <span class="fill-remaining-space"></span>
 
-  <button mat-icon-button style="margin-right: 10px;">
-    <mat-icon matBadge="15" matBadgeColor="accent">shopping_cart</mat-icon>
-  </button>
+  <!-- <button mat-icon-button style="margin-right: 10px;">
+    <mat-icon matBadge="0" matBadgeColor="warn">shopping_cart</mat-icon>
+  </button> -->
   <button mat-button>Log In</button>
   </mat-toolbar>
   

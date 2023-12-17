@@ -1,0 +1,88 @@
+/* .product-container {
+    display: flex;
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} */
+
+/* .image-carousel {
+    flex: 1;
+    padding: 20px;
+}
+
+.image-carousel img {
+    width: 420px;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+} */
+
+.product-details {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 18px;
+    color: #e44d26; /* You can change the color based on your preference */
+}
+
+.add-to-cart:hover {
+    background-color: #45a049; /* Darker green color on hover */
+}
+/* .pcontainer
+{
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+} */
+
+/* .slide
+{
+    width: 1020px !important;
+}
+
+.image-carousel,.product-container,.pcontainer
+{
+    width: 1500px !important;
+}
+.product-container,.image-carousel
+{
+    margin-left: 20%;
+    margin-right: 40%;
+} */
+.image-carousel
+{
+    text-align: center;
+}
+.slick-slide img {
+    margin-left: 30%;
+}
+.slick-prev:before, .slick-next:before
+{
+    color: black !important;
+}
+
+.slick-prev, .slick-next
+{
+    height: 200px !important;
+    width: 200px !important;
+}
+.bbutton
+{
+    background-color: #7b1fa2;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
