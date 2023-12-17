@@ -1,8 +1,10 @@
-﻿using LuminaAPI.Model.Config;
+﻿using LuminaAPI.Business;
+using LuminaAPI.Model.Config;
 using LuminaAPI.Model.PMS;
 using LuminaAPI.Service.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace LuminaAPI.Controllers
 {
@@ -38,6 +40,21 @@ namespace LuminaAPI.Controllers
             this._connectionConfig = connectionConfig;          
         }
         #endregion
+
+        [HttpGet(Name = "GetProductList")]
+        public List<ProductList> GetProductList()
+        {
+            try
+            {
+                PMSBusiness pMSBusiness = new PMSBusiness(); 
+                List<ProductList> products = pMSBusiness.GetProductLists(this._pmsService, this._padService, this._padTransService);
+                return products;
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         #region Product Detail
         [HttpGet(Name ="GetProducts")]

@@ -1,71 +1,48 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace LuminaAPI.Model.PMS
 {
     public class PADetail
     {
-        // Private properties
-        private int padID;
-        private int productID;
-        private int categoryID;
-        private int sizeID;
-        private int colorCode;
-        private string alias;
-        private string imageURL;
-        private bool isActive;
-        private ObjectId id;
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; private set; }
 
-        public ObjectId _id
-        { get { return id; } }
+        public string ProductID { get; set; }
 
-        // Public properties
-        public int PadID
-        {
-            get { return this.padID; }
-            set { this.padID = value; }
-        }
+        public int CategoryID { get; set; }
+        public int SizeID { get; set; }
+        public int ColorCode { get; set; }
+        public string Alias { get; set; }
+        public string Image { get; set; }
+        public bool IsActive { get; set; }
+    }
 
-        public int ProductID
+    public class ProductList
+    {
+        private string productID;
+        private string image;
+        private int price;
+
+        public string ProductID
         {
             get { return this.productID; }
             set { this.productID = value; }
         }
 
-        public int CategoryID
+        public string Image
         {
-            get { return this.categoryID; }
-            set { this.categoryID = value; }
+            get { return this.image; }
+            set { this.image = value; }
         }
 
-        public int SizeID
+        public int Price
         {
-            get { return this.sizeID; }
-            set { this.sizeID = value; }
+            get { return this.price; }
+            set { this.price = value; }
         }
 
-        public int ColorCode
-        {
-            get { return this.colorCode; }
-            set { this.colorCode = value; }
-        }
-
-        public string Alias
-        {
-            get { return this.alias; }
-            set { this.alias = value; }
-        }
-
-        public string ImageURL
-        {
-            get { return this.imageURL; }
-            set { this.imageURL = value; }
-        }
-
-        public bool IsActive
-        {
-            get { return this.isActive; }
-            set { this.isActive = value; }
-        }
     }
 
 }

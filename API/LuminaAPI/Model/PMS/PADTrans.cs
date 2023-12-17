@@ -1,43 +1,17 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace LuminaAPI.Model.PMS
 {
     public class PADTrans
     {
-        // Private properties
-        private int padTransID;
-        private int padID;
-        private int count;
-        private int price;
-        private ObjectId id;
-
-        public ObjectId _id
-        { get { return id; } }
-
-        // Public properties
-        public int PadTransID
-        {
-            get { return this.padTransID; }
-            set { this.padTransID = value; }
-        }
-
-        public int PadID
-        {
-            get { return this.padID; }
-            set { this.padID = value; }
-        }
-
-        public int Count
-        {
-            get { return this.count; }
-            set { this.count = value; }
-        }
-
-        public int Price
-        {
-            get { return this.price; }
-            set { this.price = value; }
-        }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; set; }
+        public int PadTransID { get; set; }
+        public string PadID { get; set; }
+        public int Count { get; set; }
+        public int Price { get; set; }
     }
 
 }

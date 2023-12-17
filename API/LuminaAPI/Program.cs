@@ -9,6 +9,15 @@ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("
 // Add services to the container.
 builder.Services.Configure<CollectionNames>(builder.Configuration.GetSection("CollectionNames"));
 builder.Services.Configure<ConnectionConfig>(builder.Configuration.GetSection("ConnectionConfig"));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("myAppCors", policy =>
+    {
+        policy.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddSingleton(builder.Configuration.GetSection("CollectionNames").Get<CollectionNames>());
 builder.Services.AddSingleton(builder.Configuration.GetSection("ConnectionConfig").Get<ConnectionConfig>());
@@ -35,6 +44,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("myAppCors");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

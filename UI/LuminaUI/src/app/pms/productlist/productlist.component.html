@@ -1,20 +1,10 @@
 <!-- <div class="square-box"> -->
-<!-- <mat-grid-list cols="4" rowHeight="2:1" style="width: 100%;"> -->
+  @if (!Loading) {
   <div class="body-container" style="width: 100%;">
-@for (product of Products; track product._id) {
-  <!-- <mat-grid-tile>
-<mat-card>
-  <mat-card-header>
-    <img mat-card-image style="height: 100%;width: 100%;" src="../../../assets/{{product.Image}}.png" alt={{product.ProductName}}>
-  </mat-card-header>
-  <mat-card-content>
-    <mat-card-title>{{product.ProductID}}</mat-card-title>
-    <mat-card-subtitle>{{product.Price}} Rs</mat-card-subtitle>
-  </mat-card-content>
-</mat-card>
-</mat-grid-tile> -->
+    @if (Products) {
+@for (product of Products; track product.ProductID) {
 <div class="product-card" (click)="selectProduct(product.ProductID)">
-  <img src="../../../assets/{{product.Image}}.png" alt={{product.ProductName}}>
+  <img src="../../../assets/{{product.Image}}.png" alt={{product.ProductID}}>
   <div class="product-details">
       <div class="product-name">{{product.ProductID}}</div>
       <div class="product-price">{{product.Price}} Rs</div>
@@ -23,6 +13,6 @@
 } @empty {
   <span>Empty list of users</span>
 }
+    }
 </div>
-<!-- </mat-grid-list> -->
-<!-- </div> -->
+  }
