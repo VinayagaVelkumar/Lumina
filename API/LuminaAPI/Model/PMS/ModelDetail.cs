@@ -1,36 +1,20 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace LuminaAPI.Model.PMS
 {
     public class ModelDetail
     {
-        // Private properties
-        private int modelID;
-        private string modelName;
-        private bool isActive;
-        private ObjectId id;
-
-        public ObjectId _id
-        { get { return id; } }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; set; }
 
         // Public properties
-        public int ModelID
-        {
-            get { return this.modelID; }
-            set { this.modelID = value; }
-        }
+        public int ModelID { get; set; }
 
-        public string ModelName
-        {
-            get { return this.modelName; }
-            set { this.modelName = value; }
-        }
+        public string ModelName { get; set; }
 
-        public bool IsActive
-        {
-            get { return this.isActive; }
-            set { this.isActive = value; }
-        }
+        public bool IsActive { get; set; }
     }
 
 }

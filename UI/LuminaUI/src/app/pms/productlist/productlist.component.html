@@ -1,13 +1,14 @@
 <!-- <div class="square-box"> -->
   @if (!Loading) {
   <div class="body-container" style="width: 100%;">
-    @if (Products) {
-@for (product of Products; track product.ProductID) {
-<div class="product-card" (click)="selectProduct(product.ProductID)">
-  <img src="../../../assets/{{product.Image}}.png" alt={{product.ProductID}}>
+    @if (Products.length > 0) {
+@for (product of Products; track product.productID) {
+
+<div class="product-card">
+  <img src="../../../assets/{{product.image}}.png" alt={{product.productID}}>
   <div class="product-details">
-      <div class="product-name">{{product.ProductID}}</div>
-      <div class="product-price">{{product.Price}} Rs</div>
+      <div class="product-name">{{product.productID}}</div>
+      <div class="product-price">{{product.price}} Rs</div>
   </div>
 </div>
 } @empty {

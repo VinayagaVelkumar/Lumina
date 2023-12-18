@@ -6,6 +6,7 @@ import { ProductList } from '../../shared/Models/ProductList';
 import { Router } from '@angular/router';
 import { PMSService } from '../../shared/Services/pms.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-productlist',
@@ -20,18 +21,25 @@ export class ProductlistComponent {
 
   public Products: ProductList[] = [];
 
-  constructor(private router: Router,private productService: PMSService) {
+  constructor(private router: Router,private productService: PMSService,private route: ActivatedRoute) {
   }
  Loading:boolean = true;
   ngOnInit(): void {
-    this.loadProducts();
+    this.route.params.subscribe(params => {
+      const categoryID = params['categoryID'];
+      const modelID = params['modelID'];
+      const sizeID = params['sizeID'];
+
+      this.loadProducts(categoryID,modelID,sizeID);
+    });
+    
   }
 
   selectProduct(productID:string) {
     this.router.navigate(['/Product',productID ]);
   }
-  private loadProducts(): void {
-    this.productService.getProducts().subscribe(
+  private loadProducts(catID:number,modelID:number,sizeID:number): void {
+    this.productService.getProducts(catID,modelID,sizeID).subscribe(
       (products: ProductList[]) => {
         debugger
         this.Products = products;

@@ -42,13 +42,58 @@ namespace LuminaAPI.Controllers
         #endregion
 
         [HttpGet(Name = "GetProductList")]
-        public List<ProductList> GetProductList()
+        public List<ProductList> GetProductList(int categoryID, int sizeID, int modelID)
         {
             try
             {
-                PMSBusiness pMSBusiness = new PMSBusiness(); 
-                List<ProductList> products = pMSBusiness.GetProductLists(this._pmsService, this._padService, this._padTransService);
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService); 
+                List<ProductList> products = pMSBusiness.GetProductLists(categoryID,sizeID,modelID);
                 return products;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpGet(Name = "GetCategories")]
+        public List<CategoryDetail> GetCategories()
+        {
+            try
+            {
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                List<CategoryDetail> categories = pMSBusiness.GetCategoryDetails(this._categoryService);
+                return categories;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpGet(Name = "GetModels")]
+        public List<ModelDetail> GetModels()
+        {
+            try
+            {
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                List<ModelDetail> models = pMSBusiness.GetModelDetails(this._modelService);
+                return models;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpGet(Name = "GetSizes")]
+        public List<SizeDetail> GetSizes(int categoryID)
+        {
+            try
+            {
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                List<SizeDetail> sizes = pMSBusiness.GetSizeDetails(this._sizeService, categoryID);
+                return sizes;
             }
             catch
             {

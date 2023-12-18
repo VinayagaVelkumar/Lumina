@@ -1,15 +1,15 @@
 export class ProductList {
-    public ProductID: string;
-    public Image: string;
-    public Price: string;
+    public productID: string;
+    public image: string;
+    public price: string;
   
     constructor(
       ProductID: string,
       Image: string,
       Price:string
     ) {
-      this.ProductID = ProductID;
-      this.Image = Image;
-      this.Price = Price;
+      this.productID = ProductID;
+      this.image = Image;
+      this.price = Price;
     }
   }

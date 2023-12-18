@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="box">
+      <div class="input-container">
+        <label>Select a Category</label>
+        <mat-form-field appearance="fill">
+          <mat-select>
+        @for(category of categories; track category.categoryID)
+        {
+      <mat-option (onSelectionChange)="onCategorySelected(category.categoryID)" [value]="category.categoryID">
+        {{ category.categoryName }}
+      </mat-option>
+    }
+    </mat-select>
+  </mat-form-field>
+</div>
+  
+<div class="input-container">
+    <label>Select a Model</label>
+  <mat-form-field>
+    <mat-select>
+        @for(model of models; track model.modelID)
+        {
+      <mat-option (onSelectionChange)="onModelSelected(model.modelID)" [value]="model.modelID">
+        {{ model.modelName }}
+      </mat-option>
+    }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div class="input-container">
+    <label>Select a Size</label>
+    <mat-form-field appearance="fill">
+    <mat-select>
+        @for(size of sizes; track size.sizeID)
+        {
+      <mat-option (onSelectionChange)="onSizeSelected(size.sizeID)" [value]="size.sizeID">
+        {{ size.size }}
+      </mat-option>
+    }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div class="input-container" style="text-align: center;">
+    <button mat-raised-button (click)="gotoList()" color="primary">Submit</button>
+  </div>
+</div>
+</div>

@@ -17,6 +17,7 @@ namespace LuminaAPI.Model.PMS
         public string Alias { get; set; }
         public string Image { get; set; }
         public bool IsActive { get; set; }
+        public int ModelID { get; set; }
     }
 
     public class ProductList

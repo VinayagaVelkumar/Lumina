@@ -1,71 +1,34 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace LuminaAPI.Model.PRMS
 {
     public class PurchaseDetail
     {
-        // Private properties
-        private int purchaseID;
-        private int productID;
-        private int padID;
-        private DateTime purchaseDate;
-        private int count;
-        private int purchasePrice;
-        private int discountCode;
-        private int mrp;
-        private ObjectId id;
-
-        public ObjectId _id
-        { get { return id; } }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id {  get; set; }
 
         // Public properties
-        public int PurchaseID
-        {
-            get { return this.purchaseID; }
-            set { this.purchaseID = value; }
-        }
+        public int PurchaseID { get; set; }
 
-        public int ProductID
-        {
-            get { return this.productID; }
-            set { this.productID = value; }
-        }
+        public int ProductID { get; set; }
 
-        public int PadID
-        {
-            get { return this.padID; }
-            set { this.padID = value; }
-        }
+        public string PadID { get; set; }
 
-        public DateTime PurchaseDate
-        {
-            get { return this.purchaseDate; }
-            set { this.purchaseDate = value; }
-        }
+        public DateTime PurchaseDate { get; set; }
 
-        public int Count
-        {
-            get { return this.count; }
-            set { this.count = value; }
-        }
+        public int Count { get; set; }
 
-        public int PurchasePrice
-        {
-            get { return this.purchasePrice; }
-            set { this.purchasePrice = value; }
-        }
+        public int PurchasePrice { get; set; }
 
-        public int DiscountCode
-        {
-            get { return this.discountCode; }
-            set { this.discountCode = value; }
-        }
+        public int DiscountCode { get; set; }
 
-        public int MRP
-        {
-            get { return this.mrp; }
-            set { this.mrp = value; }
-        }
+        public int PrevCount { get; set; }
+
+        public int CurrentCount { get; set; }
+
+        public int MRP { get; set; }
     }
 
 }

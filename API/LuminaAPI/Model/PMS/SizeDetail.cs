@@ -1,43 +1,23 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace LuminaAPI.Model.PMS
 {
     public class SizeDetail
     {
-        // Private properties
-        private int sizeID;
-        private int size;
-        private int categoryID;
-        private bool isActive;
-        private ObjectId id;
 
-        public ObjectId _id
-        { get { return id; } }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id {  get; set; }
 
         // Public properties
-        public int SizeID
-        {
-            get { return this.sizeID; }
-            set { this.sizeID = value; }
-        }
+        public int SizeID { get; set; }
 
-        public int Size
-        {
-            get { return this.size; }
-            set { this.size = value; }
-        }
+        public int Size { get; set; }
 
-        public int CategoryID
-        {
-            get { return this.categoryID; }
-            set { this.categoryID = value; }
-        }
+        public int CategoryID { get; set; }
 
-        public bool IsActive
-        {
-            get { return this.isActive; }
-            set { this.isActive = value; }
-        }
+        public bool IsActive { get; set; }
     }
 
 }
