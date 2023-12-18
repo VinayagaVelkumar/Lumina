@@ -10,30 +10,32 @@ import { Size } from '../../shared/Models/Size';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { PrmsService } from '../../shared/Services/prms.service';
 
 @Component({
-  selector: 'app-productfilter',
+  selector: 'app-add-padetail',
   standalone: true,
   imports: [MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule,HttpClientModule,MatButtonModule],
-  templateUrl: './productfilter.component.html',
-  styleUrl: './productfilter.component.css',
-  providers: [PMSService]
+  templateUrl: './add-padetail.component.html',
+  styleUrl: './add-padetail.component.css',
+  providers: [PMSService,PrmsService]
 })
-export class ProductfilterComponent {
+export class AddPADetailComponent {
   categories: Category[] = [];
   models: Model[] = [];
   sizes: Size[] = [];
   selectedCategoryId:number = 0;
   selectedModelId:Number = 0;
   selectedSizeId: Number =0;
-  defModel:Model =  new Model(0, 'Any', true);
-
-  constructor(private pmsService: PMSService  ,private router: Router) {}
+  productID: string = '';
+  constructor(private pmsService: PMSService  ,private router: Router, private prmsService: PrmsService) {}
   
   ngOnInit() {
     this.getCategories();
     this.getModels();
-    this.models.push(this.defModel);
+    this.prmsService.getproductID().subscribe(productID => {
+     this.productID = productID;
+    });
   }
 
   getCategories() {

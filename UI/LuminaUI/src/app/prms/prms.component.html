@@ -1,1 +1,29 @@
-<p>prms works!</p>
+<div class="container">
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+  </mat-form-field>
+  
+  <mat-table [dataSource]="dataSource">
+    <!-- Define columns -->
+    <ng-container matColumnDef="productID">
+      <mat-header-cell *matHeaderCellDef> Product ID </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.productID }} </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="productName">
+      <mat-header-cell *matHeaderCellDef> Product Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.productName }} </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="isActive">
+        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        <mat-cell (click)="addProduct(element.productID)" *matCellDef="let element">  <button mat-raised-button color="primary">Add</button> </mat-cell>
+      </ng-container>
+    <!-- Add more columns as needed -->
+  
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+</div>

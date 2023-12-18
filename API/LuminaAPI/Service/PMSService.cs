@@ -26,7 +26,7 @@ namespace LuminaAPI.Service
         {
             try
             {
-                List<ProductDetail> products = dBHandler.GetAllDocuments();
+                List<ProductDetail> products = dBHandler.GetAllDocuments().Where(x => x.IsActive == true).ToList();
                 return products;
             }
             catch(Exception ex)

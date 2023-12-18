@@ -20,4 +20,8 @@ export class NavbarComponent {
   navtoHome() {
     this.router.navigate(['']);
   }
+
+  navtoPurchase() {
+    this.router.navigate(['Purchase']);
+  }
 }
