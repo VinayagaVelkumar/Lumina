@@ -76,4 +76,11 @@ namespace LuminaAPI.Service.Interface
 
         public ImageDetail GetByID(string id);
     }
+
+    public interface IBrandService
+    {
+        public List<BrandDetail> GetAll();
+
+        public BrandDetail GetByID(string id);
+    }
 }

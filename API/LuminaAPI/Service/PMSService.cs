@@ -470,4 +470,46 @@ namespace LuminaAPI.Service
         }
     }
     #endregion
+
+    #region Brand Detail
+    public class BrandService : IBrandService
+    {
+        private readonly MongoDBHandler<BrandDetail> dBHandler;
+        private readonly CollectionNames _collectionNames;
+        private readonly ConnectionConfig _connectionConfig;
+
+        public BrandService(CollectionNames collectionNames, ConnectionConfig connectionConfig)
+        {
+            this._collectionNames = collectionNames;
+            this._connectionConfig = connectionConfig;
+            dBHandler = new MongoDBHandler<BrandDetail>(this._connectionConfig.ConnectionString, this._connectionConfig.DBName, this._collectionNames.Brand);
+        }
+        public List<BrandDetail> GetAll()
+        {
+            try
+            {
+                List<BrandDetail> brandDetails = dBHandler.GetAllDocuments();
+                return brandDetails;
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.Message;
+                return null;
+            }
+        }
+
+        public BrandDetail GetByID(string id)
+        {
+            try
+            {
+                BrandDetail brandDetail = dBHandler.GetDocumentById(ObjectId.Parse(id));
+                return brandDetail;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
+    #endregion
 }

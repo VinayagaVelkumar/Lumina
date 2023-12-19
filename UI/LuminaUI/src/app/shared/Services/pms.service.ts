@@ -5,6 +5,7 @@ import { ProductList } from '../Models/ProductList';
 import { Category } from '../Models/Category';
 import { Model } from '../Models/Model';
 import { Size } from '../Models/Size';
+import { Color } from '../Models/Color';
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class PMSService {
   private apiCategoryUrl = 'https://localhost:7117/api/PMS/GetCategories';
   private apiSizeUrl = 'https://localhost:7117/api/PMS/GetSizes';
   private apiModelUrl = 'https://localhost:7117/api/PMS/GetModels';
+  private apiColorUrl = 'https://localhost:7117/api/PMS/GetColors';
 
   constructor(private http: HttpClient) {}
 
@@ -34,5 +36,9 @@ export class PMSService {
   getSizes(CategoryID:Number): Observable<Size[]> {
     const urlWithParams = `${this.apiSizeUrl}?categoryID=${CategoryID}`
     return this.http.get<Size[]>(urlWithParams);
+  }
+
+  getColors(): Observable<Color[]> {
+    return this.http.get<Color[]>(this.apiColorUrl);
   }
 }

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../Models/Product';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrmsService {
-  private productID = new BehaviorSubject<string>('');
   private apiPLUrl = 'https://localhost:7117/api/PMS/GetProducts';
+  private apiAPUrl = 'https://localhost:7117/api/PMS/AddPurchase';
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {
@@ -16,12 +16,14 @@ export class PrmsService {
   }
 
   setproductID(data: string): void {
-    debugger
-    this.productID.next(data);
+    localStorage.setItem("productID", data);
   }
 
-  getproductID(): Observable<string> {
-    debugger
-    return this.productID.asObservable();
+  getproductID(): any {
+    return localStorage.getItem("productID");
+  }
+
+  addPurchase(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiAPUrl}`, data);
   }
 }

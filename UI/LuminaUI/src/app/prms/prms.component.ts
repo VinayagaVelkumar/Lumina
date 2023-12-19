@@ -20,7 +20,7 @@ export class PRMSComponent {
   
   constructor (private prmsService: PrmsService,private router: Router) {}
   products:Product[] = [];
-  displayedColumns: string[] = ['productID', 'productName', 'isActive'];
+  displayedColumns: string[] = ['productID', 'productName', 'brand', 'model','isActive'];
   dataSource = new MatTableDataSource<Product>([]);
 
    applyFilter(event: Event) {

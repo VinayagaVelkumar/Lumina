@@ -21,11 +21,12 @@ namespace LuminaAPI.Controllers
         private readonly ISizeService _sizeService;
         private readonly IModelService _modelService;
         private readonly IImageService _imageService;
+        private readonly IBrandService _brandService;
         private readonly CollectionNames _collectionNames;
         private readonly ConnectionConfig _connectionConfig;
 
         #region Constructer
-        public PMSController(IPMSService pmsService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADService padService, IPADTransService padTransService, IAliasService aliasService, IColorService colorService,ICategoryService categoryService, ISizeService sizeService, IModelService modelService, IImageService imageService)
+        public PMSController(IPMSService pmsService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADService padService, IPADTransService padTransService, IAliasService aliasService, IColorService colorService,ICategoryService categoryService, ISizeService sizeService, IModelService modelService, IImageService imageService, IBrandService brandService)
         {
             this._pmsService = pmsService;
             this._padService = padService;
@@ -36,6 +37,7 @@ namespace LuminaAPI.Controllers
             this._categoryService = categoryService;
             this._modelService = modelService;
             this._imageService = imageService;
+            this._brandService = brandService;
             this._collectionNames = collectionNames;
             this._connectionConfig = connectionConfig;          
         }
@@ -101,13 +103,29 @@ namespace LuminaAPI.Controllers
             }
         }
 
+        [HttpGet(Name = "GetColors")]
+        public List<ColorDetail> GetColors()
+        {
+            try
+            {
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                List<ColorDetail> colors = pMSBusiness.GetColors(this._colorService);
+                return colors;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         #region Product Detail
         [HttpGet(Name ="GetProducts")]
         public List<ProductDetail> GetProducts()
         {
             try
             {
-                List<ProductDetail> products = this._pmsService.GetAll();
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                List<ProductDetail> products = pMSBusiness.GetProducts(this._brandService, this._modelService);
                 return products;
             }
             catch

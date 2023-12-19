@@ -50,8 +50,8 @@ namespace LuminaAPI.Controllers
             }
         }
 
-        [HttpPost(Name = "InsertPurchase")]
-        public bool InsertPurchase(PurchaseDetail purchase)
+        [HttpPost(Name = "AddPurchase")]
+        public bool AddPurchase(PurchaseDetail purchase)
         {
             try
             {

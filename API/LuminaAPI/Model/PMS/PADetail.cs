@@ -12,12 +12,17 @@ namespace LuminaAPI.Model.PMS
         public string ProductID { get; set; }
 
         public int CategoryID { get; set; }
+
         public int SizeID { get; set; }
-        public int ColorCode { get; set; }
+
+        public int ColorID { get; set; }
+
         public string Alias { get; set; }
+
         public string Image { get; set; }
+
         public bool IsActive { get; set; }
-        public int ModelID { get; set; }
+    }
     }
 
     public class ProductList
@@ -45,5 +50,3 @@ namespace LuminaAPI.Model.PMS
         }
 
     }
-
-}

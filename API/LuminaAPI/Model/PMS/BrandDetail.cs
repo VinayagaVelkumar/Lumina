@@ -1,20 +1,19 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 
 namespace LuminaAPI.Model.PMS
 {
-    public class ColorDetail
+    public class BrandDetail
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
 
         // Public properties
-        public int ColorID { get; set; }
+        public int BrandID { get; set; }
 
-        public string ColorName { get; set; }
+        public string BrandName { get; set; }
 
         public bool IsActive { get; set; }
     }
-
 }

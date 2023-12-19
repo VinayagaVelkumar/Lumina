@@ -3,7 +3,9 @@
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
   </mat-form-field>
-  
+  <div style="float: right;padding-top: 15px;">
+  <button mat-raised-button color="primary">Add Product</button>
+  </div>
   <mat-table [dataSource]="dataSource">
     <!-- Define columns -->
     <ng-container matColumnDef="productID">
@@ -14,6 +16,16 @@
     <ng-container matColumnDef="productName">
       <mat-header-cell *matHeaderCellDef> Product Name </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.productName }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="brand">
+      <mat-header-cell *matHeaderCellDef> Brand Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.brand }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="model">
+      <mat-header-cell *matHeaderCellDef> Model Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.model }} </mat-cell>
     </ng-container>
   
     <ng-container matColumnDef="isActive">

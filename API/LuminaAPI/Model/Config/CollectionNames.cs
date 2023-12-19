@@ -11,5 +11,6 @@
         public string ProductAvailability { get; set; }
         public string ProductAvailabilityTrans { get; set; }
         public string Image { get; set; }
+        public string Brand { get; set; }
     }
 }

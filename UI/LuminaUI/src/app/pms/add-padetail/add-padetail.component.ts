@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { PrmsService } from '../../shared/Services/prms.service';
+import { Color } from '../../shared/Models/Color';
 
 @Component({
   selector: 'app-add-padetail',
@@ -22,20 +23,23 @@ import { PrmsService } from '../../shared/Services/prms.service';
 })
 export class AddPADetailComponent {
   categories: Category[] = [];
-  models: Model[] = [];
   sizes: Size[] = [];
+  colors: Color[] = [];
   selectedCategoryId:number = 0;
-  selectedModelId:Number = 0;
   selectedSizeId: Number =0;
+  selectedColorId: Number =0;
+  mrp:number =0;
+  count:number =0;
+  purPrice:number =0;
+  discount:number =0;
+
   productID: string = '';
   constructor(private pmsService: PMSService  ,private router: Router, private prmsService: PrmsService) {}
   
   ngOnInit() {
     this.getCategories();
-    this.getModels();
-    this.prmsService.getproductID().subscribe(productID => {
-     this.productID = productID;
-    });
+    this.getColors();
+    this.productID = this.prmsService.getproductID();
   }
 
   getCategories() {
@@ -44,9 +48,9 @@ export class AddPADetailComponent {
     });
   }
 
-  getModels() {
-    this.pmsService.getModels().subscribe((models: Model[]) => {
-      this.models = models;
+  getColors() {
+    this.pmsService.getColors().subscribe((colors: Color[]) => {
+      this.colors = colors;
     });
   }
 
@@ -55,12 +59,12 @@ export class AddPADetailComponent {
     this.getSizes(categoryId);
   }
 
-  onModelSelected(modelID: number) {
-    this.selectedModelId = modelID;
-  }
-
   onSizeSelected(sizeID: number) {
     this.selectedSizeId = sizeID;
+  }
+
+  onColorSelected(colorID: number) {
+    this.selectedColorId = colorID;
   }
 
   getSizes(categoryId: number) {
@@ -69,8 +73,26 @@ export class AddPADetailComponent {
     });
 }
 
-gotoList()
+addPurchase()
 {
-    this.router.navigate(['List', this.selectedCategoryId, this.selectedModelId, this.selectedSizeId]);
+  const data = {
+    ProductID: this.productID,
+    CategoryId: this.selectedCategoryId,
+    SizeId: this.selectedSizeId,
+    ColorId: this.selectedColorId,
+    MRP: this.mrp,
+    Count: this.count,
+    PurchasePrice: this.purPrice,
+    DiscountCode: this.discount,
+  };
+
+  this.prmsService.addPurchase(data).subscribe(
+    (response) => {
+      this.router.navigate(['Purchase'])
+    },
+    (error) => {
+      console.error('Error sending data:', error);
+    }
+  );
 }
 }

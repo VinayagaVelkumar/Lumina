@@ -30,6 +30,7 @@ builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<ISizeService, SizeService>();
 builder.Services.AddTransient<IModelService, ModelService>();
 builder.Services.AddTransient<IImageService, ImageService>();
+builder.Services.AddTransient<IBrandService, BrandService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

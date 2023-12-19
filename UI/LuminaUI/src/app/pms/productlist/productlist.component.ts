@@ -41,7 +41,6 @@ export class ProductlistComponent {
   private loadProducts(catID:number,modelID:number,sizeID:number): void {
     this.productService.getProducts(catID,modelID,sizeID).subscribe(
       (products: ProductList[]) => {
-        debugger
         this.Products = products;
         this.Loading = false;
       },
