@@ -1,4 +1,5 @@
-﻿using LuminaAPI.Model.Config;
+﻿using LuminaAPI.Business;
+using LuminaAPI.Model.Config;
 using LuminaAPI.Model.PMS;
 using LuminaAPI.Model.PRMS;
 using LuminaAPI.Service;
@@ -12,13 +13,19 @@ namespace LuminaAPI.Controllers
     [ApiController]
     public class PRMSController : ControllerBase
     {
-        private readonly IPRMSService _pmrsService;
+        private readonly IPRMSService _prmsService;
+        private readonly IPMSService _pmsService;
+        private readonly IPADService _padService;
+        private readonly IPADTransService _padTransService;
         private readonly CollectionNames _collectionNames;
         private readonly ConnectionConfig _connectionConfig;
 
-        public PRMSController(IPRMSService prmsService, CollectionNames collectionNames, ConnectionConfig connectionConfig)
+        public PRMSController(IPRMSService prmsService,IPMSService pMSService, IPADService padService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADTransService pADTransService)
         {
-            this._pmrsService = prmsService;
+            this._prmsService = prmsService;
+            this._pmsService = pMSService;
+            this._padService = padService;
+            this._padTransService = pADTransService;
             this._collectionNames = collectionNames;
             this._connectionConfig = connectionConfig;
         }
@@ -27,7 +34,7 @@ namespace LuminaAPI.Controllers
         {
             try
             {
-                List<PurchaseDetail> purchases = this._pmrsService.GetAll();
+                List<PurchaseDetail> purchases = this._prmsService.GetAll();
                 return purchases;
             }
             catch
@@ -41,7 +48,7 @@ namespace LuminaAPI.Controllers
         {
             try
             {
-                PurchaseDetail purchase = this._pmrsService.GetByID(id);
+                PurchaseDetail purchase = this._prmsService.GetByID(id);
                 return purchase;
             }
             catch
@@ -51,11 +58,12 @@ namespace LuminaAPI.Controllers
         }
 
         [HttpPost(Name = "AddPurchase")]
-        public bool AddPurchase(PurchaseDetail purchase)
+        public bool AddPurchase([FromBody] PurchaseDetailFromUI purDetail)
         {
             try
             {
-                bool isCreated = this._pmrsService.Insert(purchase);
+                PRMSBusiness pRMSBusiness = new PRMSBusiness(this._prmsService, this._pmsService, this._padService, this._padTransService);
+                bool isCreated = pRMSBusiness.AddPurchaseDetail(purDetail);
                 return isCreated;
             }
             catch
@@ -69,7 +77,7 @@ namespace LuminaAPI.Controllers
         {
             try
             {
-                bool isUpdated = this._pmrsService.Update(purchase);
+                bool isUpdated = this._prmsService.Update(purchase);
                 return isUpdated;
             }
             catch

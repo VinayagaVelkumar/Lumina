@@ -83,4 +83,11 @@ namespace LuminaAPI.Service.Interface
 
         public BrandDetail GetByID(string id);
     }
+
+    public interface ITagService
+    {
+        public List<TagDetail> GetAll();
+
+        public TagDetail GetByID(string id);
+    }
 }

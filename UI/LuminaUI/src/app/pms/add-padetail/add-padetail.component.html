@@ -52,6 +52,20 @@
 </div>
 
 <div class="input-container">
+  <label>Select a Tag</label>
+  <mat-form-field appearance="fill">
+  <mat-select>
+      @for(tag of tags; track tag.tagID)
+      {
+    <mat-option (onSelectionChange)="onTagSelected(tag.tagID)" [value]="tag.tagID">
+      {{ tag.tagName }}
+    </mat-option>
+  }
+  </mat-select>
+</mat-form-field>
+</div>
+
+<div class="input-container">
   <label>Count</label>
   <mat-form-field appearance="fill">
     <input matInput placeholder="Count" #input [(ngModel)]="count">

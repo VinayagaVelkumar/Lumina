@@ -31,6 +31,11 @@ export class PRMSComponent {
   ngOnInit() {
   this.getProducts()
   }
+  
+  gotAddProduct()
+{
+  this.router.navigate(['AddProduct'])
+}
 
   getProducts() {
     this.prmsService.getProducts().subscribe((products: Product[]) => {

@@ -22,11 +22,12 @@ namespace LuminaAPI.Controllers
         private readonly IModelService _modelService;
         private readonly IImageService _imageService;
         private readonly IBrandService _brandService;
+        private readonly ITagService _tagService;
         private readonly CollectionNames _collectionNames;
         private readonly ConnectionConfig _connectionConfig;
 
         #region Constructer
-        public PMSController(IPMSService pmsService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADService padService, IPADTransService padTransService, IAliasService aliasService, IColorService colorService,ICategoryService categoryService, ISizeService sizeService, IModelService modelService, IImageService imageService, IBrandService brandService)
+        public PMSController(IPMSService pmsService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADService padService, IPADTransService padTransService, IAliasService aliasService, IColorService colorService,ICategoryService categoryService, ISizeService sizeService, IModelService modelService, IImageService imageService, IBrandService brandService, ITagService tagService)
         {
             this._pmsService = pmsService;
             this._padService = padService;
@@ -38,6 +39,7 @@ namespace LuminaAPI.Controllers
             this._modelService = modelService;
             this._imageService = imageService;
             this._brandService = brandService;
+            this._tagService = tagService;
             this._collectionNames = collectionNames;
             this._connectionConfig = connectionConfig;          
         }
@@ -118,6 +120,36 @@ namespace LuminaAPI.Controllers
             }
         }
 
+        [HttpGet(Name = "GetTags")]
+        public List<TagDetail> GetTags()
+        {
+            try
+            {
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                List<TagDetail> tags = pMSBusiness.GetTags(this._tagService);
+                return tags;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpGet(Name = "GetBrands")]
+        public List<BrandDetail> GetBrands()
+        {
+            try
+            {
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                List<BrandDetail> brands = this._brandService.GetAll().Where(x => x.IsActive == true).ToList();
+                return brands;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         #region Product Detail
         [HttpGet(Name ="GetProducts")]
         public List<ProductDetail> GetProducts()
@@ -149,7 +181,7 @@ namespace LuminaAPI.Controllers
         }
 
         [HttpPost(Name = "InsertProduct")]
-        public bool InsertProduct(ProductDetail product)
+        public bool InsertProduct([FromBody] ProductDetail product)
         {
             try
             {

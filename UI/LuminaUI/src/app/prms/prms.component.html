@@ -4,7 +4,7 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
   </mat-form-field>
   <div style="float: right;padding-top: 15px;">
-  <button mat-raised-button color="primary">Add Product</button>
+  <button mat-raised-button (click)="gotAddProduct()" color="primary">Add Product</button>
   </div>
   <mat-table [dataSource]="dataSource">
     <!-- Define columns -->

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class PrmsService {
   private apiPLUrl = 'https://localhost:7117/api/PMS/GetProducts';
-  private apiAPUrl = 'https://localhost:7117/api/PMS/AddPurchase';
+  private apiAPUrl = 'https://localhost:7117/api/PRMS/AddPurchase';
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {

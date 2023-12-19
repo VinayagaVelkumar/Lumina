@@ -17,11 +17,11 @@ namespace LuminaAPI.Model.PMS
 
         public int ColorID { get; set; }
 
-        public string Alias { get; set; }
-
         public string Image { get; set; }
 
         public bool IsActive { get; set; }
+
+        public int TagID { get; set; }
     }
     }
 

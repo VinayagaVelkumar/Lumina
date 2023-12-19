@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .box {
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .input-container {
+    margin-bottom: 16px;
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+button:hover
+{
+  background-color: #3b0231;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-family: 'Arial', sans-serif; /* Custom font family */
+    font-size: 16px; /* Custom font size */
+    font-weight: bold; /* Custom font weight */
+    color: #555; /* Custom label text color */
+  }
+
+  .file-input {
+    /* Add your desired styles here */
+    width: 100%; /* Example: make the input full-width */
+    padding: 8px; /* Example: add some padding */
+    border: 1px solid #ccc; /* Example: add a border */
+    border-radius: 4px; /* Example: round the corners */
+    box-sizing: border-box; /* Example: include padding and border in the width */
+    /* Add any other styles you need */
+  }

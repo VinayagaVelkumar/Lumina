@@ -5,13 +5,13 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { PMSService } from '../../shared/Services/pms.service';
 import { Category } from '../../shared/Models/Category';
-import { Model } from '../../shared/Models/Model';
 import { Size } from '../../shared/Models/Size';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { PrmsService } from '../../shared/Services/prms.service';
 import { Color } from '../../shared/Models/Color';
+import { Tag } from '../../shared/Models/Tag';
 
 @Component({
   selector: 'app-add-padetail',
@@ -25,6 +25,7 @@ export class AddPADetailComponent {
   categories: Category[] = [];
   sizes: Size[] = [];
   colors: Color[] = [];
+  tags: Tag[] =[];
   selectedCategoryId:number = 0;
   selectedSizeId: Number =0;
   selectedColorId: Number =0;
@@ -32,6 +33,7 @@ export class AddPADetailComponent {
   count:number =0;
   purPrice:number =0;
   discount:number =0;
+  tagID:number =0;
 
   productID: string = '';
   constructor(private pmsService: PMSService  ,private router: Router, private prmsService: PrmsService) {}
@@ -39,6 +41,7 @@ export class AddPADetailComponent {
   ngOnInit() {
     this.getCategories();
     this.getColors();
+    this.getTags();
     this.productID = this.prmsService.getproductID();
   }
 
@@ -54,6 +57,12 @@ export class AddPADetailComponent {
     });
   }
 
+  getTags() {
+    this.pmsService.getTags().subscribe((tags: Tag[]) => {
+      this.tags = tags;
+    });
+  }
+
   onCategorySelected(categoryId: number) {
     this.selectedCategoryId = categoryId;
     this.getSizes(categoryId);
@@ -65,6 +74,10 @@ export class AddPADetailComponent {
 
   onColorSelected(colorID: number) {
     this.selectedColorId = colorID;
+  }
+
+  onTagSelected(tagID: number) {
+    this.tagID = tagID;
   }
 
   getSizes(categoryId: number) {
@@ -84,6 +97,7 @@ addPurchase()
     Count: this.count,
     PurchasePrice: this.purPrice,
     DiscountCode: this.discount,
+    TagID: this.tagID
   };
 
   this.prmsService.addPurchase(data).subscribe(

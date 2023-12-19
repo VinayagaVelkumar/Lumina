@@ -9,7 +9,7 @@ namespace LuminaAPI.Model.PRMS
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id {  get; set; }
 
-        public int ProductID { get; set; }
+        public string ProductID { get; set; }
 
         public string PadID { get; set; }
 

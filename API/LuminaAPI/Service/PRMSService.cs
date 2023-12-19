@@ -17,7 +17,7 @@ namespace LuminaAPI.Service
         {
             this._collectionNames = collectionNames;
             this._connectionConfig = connectionConfig;
-            dBHandler = new MongoDBHandler<PurchaseDetail>(this._connectionConfig.ConnectionString, this._connectionConfig.DBName, this._collectionNames.Product);
+            dBHandler = new MongoDBHandler<PurchaseDetail>(this._connectionConfig.ConnectionString, this._connectionConfig.DBName, this._collectionNames.Purchase);
         }
 
         public List<PurchaseDetail> GetAll()

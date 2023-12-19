@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="box">
+
+        <div class="input-container">
+            <mat-form-field appearance="fill">
+                <mat-label>Product ID</mat-label>
+                <input matInput [(ngModel)]="productID">
+      </mat-form-field>
+    </div>
+    
+    <div class="input-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Product Name</mat-label>
+            <input matInput [(ngModel)]="productName">
+  </mat-form-field>
+</div>
+  
+    
+      <div class="input-container">
+        <label>Select a Brand</label>
+        <mat-form-field appearance="fill">
+          <mat-select>
+        @for(brand of brands; track brand.brandID)
+        {
+      <mat-option (onSelectionChange)="onBrandSelected(brand.brandID)" [value]="brand.brandID">
+        {{ brand.brandName }}
+      </mat-option>
+    }
+    </mat-select>
+  </mat-form-field>
+</div>
+  
+<div class="input-container">
+    <label>Select a Model</label>
+  <mat-form-field>
+    <mat-select>
+        @for(model of models; track model.modelID)
+        {
+      <mat-option (onSelectionChange)="onModelSelected(model.modelID)" [value]="model.modelID">
+        {{ model.modelName }}
+      </mat-option>
+    }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div class="input-container">
+      <mat-label>Upload Image</mat-label>
+      <input type="file" (change)="onImageSelected($event)" accept="image/*" class="file-input" />
+  </div>  
+
+<div class="input-container" style="text-align: center;">
+    <button mat-raised-button (click)="addProduct()" color="primary">Add Product</button>
+  </div>
+</div>
+</div>

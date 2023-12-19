@@ -2,7 +2,7 @@
 {
     public class PurchaseDetailFromUI
     {
-        public int ProductID { get; set; }
+        public string ProductID { get; set; }
 
         public int CategoryID { get; set; }
 
@@ -17,5 +17,7 @@
         public int PurchasePrice { get; set; }
 
         public int DiscountCode { get; set; }
+
+        public int TagID { get; set; }
     }
 }

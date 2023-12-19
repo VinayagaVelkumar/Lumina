@@ -512,4 +512,46 @@ namespace LuminaAPI.Service
         }
     }
     #endregion
+
+    #region Tag Detail
+    public class TagService : ITagService
+    {
+        private readonly MongoDBHandler<TagDetail> dBHandler;
+        private readonly CollectionNames _collectionNames;
+        private readonly ConnectionConfig _connectionConfig;
+
+        public TagService(CollectionNames collectionNames, ConnectionConfig connectionConfig)
+        {
+            this._collectionNames = collectionNames;
+            this._connectionConfig = connectionConfig;
+            dBHandler = new MongoDBHandler<TagDetail>(this._connectionConfig.ConnectionString, this._connectionConfig.DBName, this._collectionNames.Tag);
+        }
+        public List<TagDetail> GetAll()
+        {
+            try
+            {
+                List<TagDetail> tagDetails = dBHandler.GetAllDocuments();
+                return tagDetails;
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.Message;
+                return null;
+            }
+        }
+
+        public TagDetail GetByID(string id)
+        {
+            try
+            {
+                TagDetail tagDetail = dBHandler.GetDocumentById(ObjectId.Parse(id));
+                return tagDetail;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
+    #endregion
 }

@@ -22,6 +22,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddSingleton(builder.Configuration.GetSection("CollectionNames").Get<CollectionNames>());
 builder.Services.AddSingleton(builder.Configuration.GetSection("ConnectionConfig").Get<ConnectionConfig>());
 builder.Services.AddTransient<IPMSService, PMSService>();
+builder.Services.AddTransient<IPRMSService, PRMSService>();
 builder.Services.AddTransient<IPADService, PADService>();
 builder.Services.AddTransient<IPADTransService, PADTransService>();
 builder.Services.AddTransient<IAliasService, AliasService>();
@@ -31,6 +32,7 @@ builder.Services.AddTransient<ISizeService, SizeService>();
 builder.Services.AddTransient<IModelService, ModelService>();
 builder.Services.AddTransient<IImageService, ImageService>();
 builder.Services.AddTransient<IBrandService, BrandService>();
+builder.Services.AddTransient<ITagService, TagService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

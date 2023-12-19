@@ -20,9 +20,13 @@ namespace LuminaAPI.Model.PMS
 
         public int ModelID { get; set; }
 
+        [BsonIgnore]
         public string Brand {  get; set; }
 
+        [BsonIgnore]
         public string Model {  get; set; }  
+
+        public string Image { get; set; }
     }
 
 }

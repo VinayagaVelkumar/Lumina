@@ -78,7 +78,7 @@ namespace LuminaAPI.Business
                              join detail in pADetails on trans.PadID equals detail._id
                              select new ProductList
                              {
-                                 Price = trans.Price,
+                                 Price = trans.MRP,
                                  Image = detail.Image,
                                  ProductID = detail.ProductID
                              }).ToList();
@@ -107,6 +107,12 @@ namespace LuminaAPI.Business
         public List<ColorDetail> GetColors(IColorService _colorService)
         {
             List<ColorDetail> colors = _colorService.GetAll().Where(x => x.IsActive).ToList();
+            return colors;
+        }
+
+        public List<TagDetail> GetTags(ITagService _tagService)
+        {
+            List<TagDetail> colors = _tagService.GetAll().Where(x => x.IsActive).ToList();
             return colors;
         }
     }
