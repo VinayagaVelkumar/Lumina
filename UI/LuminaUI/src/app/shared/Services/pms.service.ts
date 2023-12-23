@@ -9,6 +9,7 @@ import { Color } from '../Models/Color';
 import { Tag } from '../Models/Tag';
 import { Product } from '../Models/Product';
 import { Brand } from '../Models/Brand';
+import { PAList } from '../Models/PAList';
 
 
 @Injectable({
@@ -22,7 +23,8 @@ export class PMSService {
   private apiColorUrl = 'https://localhost:7117/api/PMS/GetColors';
   private apiTagUrl = 'https://localhost:7117/api/PMS/GetTags';
   private apiAddProductUrl = 'https://localhost:7117/api/PMS/InsertProduct';
-  private apiBrandUrl = 'https://localhost:7117/api/PMS/GetBrands';
+  private apiBrandUrl = 'https://localhost:7117/api/PMS/GetBrands'; 
+  private apiPAImageUrl = 'https://localhost:7117/api/PMS/GetAllPAImage'; 
 
   constructor(private http: HttpClient) {}
 
@@ -58,5 +60,9 @@ export class PMSService {
 
   addProduct(data: Product): Observable<any> {
     return this.http.post<any>(`${this.apiAddProductUrl}`, data);
+  }
+
+  getPAImage(): Observable<PAList[]> {
+    return this.http.get<PAList[]>(this.apiPAImageUrl);
   }
 }

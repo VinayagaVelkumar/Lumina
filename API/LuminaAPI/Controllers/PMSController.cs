@@ -211,11 +211,27 @@ namespace LuminaAPI.Controllers
 
         #region Product Availability Detail
         [HttpGet(Name ="GetAllPA")]
-        public List<PADetail> GetAllPAD()
+        public List<PAList> GetAllPAD()
         {
             try
             {
-                List<PADetail> pADetails = this._padService.GetAll();
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                List<PAList> pADetails = pMSBusiness.GetPAList(this._colorService, this._tagService, this._sizeService, this._categoryService);
+                return pADetails;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpGet(Name = "GetAllPAImage")]
+        public List<PAList> GetAllPADWithoutImage()
+        {
+            try
+            {
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                List<PAList> pADetails = pMSBusiness.GetPAList(this._colorService, this._tagService,this._sizeService,this._categoryService).Where(x => x.Image == null || x.Image  == string.Empty).ToList();
                 return pADetails;
             }
             catch

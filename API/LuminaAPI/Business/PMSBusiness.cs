@@ -104,6 +104,12 @@ namespace LuminaAPI.Business
             return sizes;
         }
 
+        public List<SizeDetail> GetAllSizes(ISizeService _sizeService)
+        {
+            List<SizeDetail> sizes = _sizeService.GetAll().Where(x => x.IsActive).ToList();
+            return sizes;
+        }
+
         public List<ColorDetail> GetColors(IColorService _colorService)
         {
             List<ColorDetail> colors = _colorService.GetAll().Where(x => x.IsActive).ToList();
@@ -112,8 +118,46 @@ namespace LuminaAPI.Business
 
         public List<TagDetail> GetTags(ITagService _tagService)
         {
-            List<TagDetail> colors = _tagService.GetAll().Where(x => x.IsActive).ToList();
-            return colors;
+            List<TagDetail> tags = _tagService.GetAll().Where(x => x.IsActive).ToList();
+            return tags;
+        }
+
+        public List<PAList> GetPAList(IColorService colorService, ITagService tagService, ISizeService sizeService, ICategoryService categoryService)
+        {
+            List<PAList> paList = new List<PAList>();
+            List<ColorDetail> colors = this.GetColors(colorService);
+            List<TagDetail> tags = this.GetTags(tagService);
+            List<SizeDetail> sizes = this.GetAllSizes(sizeService);
+            List<CategoryDetail> categories = this.GetCategoryDetails(categoryService);
+            List<PADetail> pADetails = this._padService.GetAll() ;
+
+            var joinedDetails = from padetail in pADetails
+                                join color in colors on padetail.ColorID equals color.ColorID
+                                join category in categories on padetail.CategoryID equals category.CategoryID
+                                join tag in tags on padetail.TagID equals tag.TagID
+                                join size in sizes on padetail.SizeID equals size.SizeID
+                                select new
+                                {
+                                    PADetail = padetail,
+                                    ColorName = color.ColorName,
+                                    CategoryName = category.CategoryName,
+                                    TagName = tag.TagName,
+                                    Size = size.Size
+                                };
+
+             paList = joinedDetails.Select(j =>
+                new PAList
+                {
+                    _id = j.PADetail._id,
+                    ProductID = j.PADetail.ProductID,
+                    Category = j.CategoryName,
+                    Size = j.Size,
+                    Color = j.ColorName,
+                    Image = j.PADetail.Image,
+                    TagID = j.TagName
+                }).ToList();
+
+            return paList;
         }
     }
 }

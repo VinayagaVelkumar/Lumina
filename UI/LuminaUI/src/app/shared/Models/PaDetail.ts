@@ -6,7 +6,7 @@ export class PADetail {
     public sizeID: number;
     public colorCode: number;
     public alias: string;
-    public imageURL: string;
+    public image: string;
     public isActive: boolean;
   
     constructor(
@@ -17,7 +17,7 @@ export class PADetail {
       sizeID: number,
       colorCode: number,
       alias: string,
-      imageURL: string,
+      image: string,
       isActive: boolean
     ) {
       this._id = _id;
@@ -27,7 +27,7 @@ export class PADetail {
       this.sizeID = sizeID;
       this.colorCode = colorCode;
       this.alias = alias;
-      this.imageURL = imageURL;
+      this.image = image;
       this.isActive = isActive;
     }
   }

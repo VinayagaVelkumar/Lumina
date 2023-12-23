@@ -28,7 +28,6 @@ export class AddProductComponent {
   selectedModel: number =0;
   productID: string = '';
   productName: string = '';
-  image: File | null =null ;
   constructor(private pmsService: PMSService  ,private router: Router, private prmsService: PrmsService,private imageCompress: NgxImageCompressService) {}
   
   ngOnInit() {
@@ -56,25 +55,6 @@ export class AddProductComponent {
     this.selectedModel = modelID;
   }
 
-  onImageSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.compressImage(file);
-    }
-  }
-
-  compressImage(file: File): void {
-    const reader = new FileReader();
-
-    reader.onload = (e: any) => {
-      this.imageCompress.compressFile(e.target.result, -1, 50, 50).then((result) => {
-        const compressedImage = new File([result], file.name, { type: file.type });
-        this.image = compressedImage;
-      });
-    };
-
-    reader.readAsDataURL(file);
-  }
 addProduct()
 {
   const data:Product = {
@@ -83,7 +63,6 @@ addProduct()
     productName: this.productName,
     brandID: this.selectedBrand,
     modelID: this.selectedModel,
-    image: this.image?.name.split('.')[0],
     isActive: true,
     brand: '',
     model:''

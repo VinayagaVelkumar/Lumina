@@ -7,7 +7,6 @@ export class Product {
     public modelID: number;
     public brand: string;
     public model: string;
-    public image?: string | null;
 
     constructor(
       Id: string | null,
@@ -29,6 +28,5 @@ export class Product {
       this.modelID = ModelID;
       this.brand = Brand;
       this.model = Model;
-      this.image = Image;
     }
   }

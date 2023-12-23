@@ -38,7 +38,6 @@ namespace LuminaAPI.Business
                 newPADetail.CategoryID = detailFromUI.CategoryID;
                 newPADetail.SizeID = detailFromUI.SizeID;
                 newPADetail.ColorID = detailFromUI.ColorID;
-                newPADetail.Image = product.Image;
                 newPADetail.TagID = detailFromUI.TagID;
                 newPADetail.IsActive = true;
 
