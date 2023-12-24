@@ -22,6 +22,8 @@ namespace LuminaAPI.Service.Interface
         public bool Insert(PADetail paDetail);
 
         public bool Update(PADetail paDetail);
+
+        public bool UpdateImage(PADetail paDetail);
     }
 
     public interface IPADTransService

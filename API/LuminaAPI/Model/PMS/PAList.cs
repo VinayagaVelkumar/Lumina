@@ -14,6 +14,16 @@
 
         public string Image { get; set; }
 
-        public string TagID { get; set; }
+        public string Tag { get; set; }
+
+        public int CategoryID { get; set; }
+
+        public int SizeID { get; set; }
+
+        public int ColorID { get; set; }
+
+        public int TagID { get; set; }
+
+        public int Count { get; set; }
     }
 }

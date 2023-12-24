@@ -2,25 +2,30 @@ import { Component } from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { PMSService } from '../../shared/Services/pms.service';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { PAList } from '../../shared/Models/PAList';
+import { CommonService } from '../../shared/Services/common.service';
 
 @Component({
   selector: 'app-imageupload',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule,HttpClientModule,MatButtonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatTableModule,HttpClientModule,MatButtonModule,MatIconModule],
   templateUrl: './imageupload.component.html',
   styleUrl: './imageupload.component.css',
-  providers:[PMSService]
+  providers:[PMSService,CommonService]
 })
 export class ImageuploadComponent {
-  constructor (private pmsService: PMSService,private router: Router) {}
+  constructor (private pmsService: PMSService,private commonService:CommonService,private router: Router) {}
   products:PAList[] = [];
-  displayedColumns: string[] = ['productID', 'productName', 'brand', 'model','isActive'];
+  displayedColumns: string[] = ['productID', 'Category', 'Color', 'image'];
   dataSource = new MatTableDataSource<PAList>([]);
+  selectedProductID: string ='';
+  selectedCategoryID: number = 0;
+  selectedColorID: number = 0
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -30,11 +35,6 @@ export class ImageuploadComponent {
   ngOnInit() {
   this.getPAImageList()
   }
-  
-  gotAddProduct()
-{
-  this.router.navigate(['Add Product'])
-}
 
   getPAImageList() {
     this.pmsService.getPAImage().subscribe((products: PAList[]) => {
@@ -43,11 +43,27 @@ export class ImageuploadComponent {
     });
   }
 
-  uploadImage(productID:string)
+  onUploadClick(productID:string, categoryID:number, colorID:number)
   {
-    // this.pmsService.setproductID(productID);
-    // this.router.navigate(['AddPADetail']);
+    this.selectedCategoryID = categoryID;
+    this.selectedColorID = colorID;
+    this.selectedProductID = productID;
   }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+
+    if (file) {
+            this.pmsService.UploadImage(this.selectedProductID,this.selectedCategoryID,this.selectedColorID,file).subscribe((result:boolean)=>
+            {
+              if(result == true)
+              {
+                window.location.reload();
+              }
+            }
+            );
+    }
+}
 }
 
 

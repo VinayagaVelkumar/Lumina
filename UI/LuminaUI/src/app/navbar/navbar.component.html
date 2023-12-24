@@ -1,14 +1,19 @@
 <mat-toolbar style="margin-bottom: 20px" color="primary">
     <button mat-button (click)="navtoHome()">Home</button>
-    <button class="NavButton" mat-button (click)="navtoPurchase()">Purchase</button>
+    <button mat-button (click)="navToProducts()">Products</button>
+    <button class="NavButton" mat-button [matMenuTriggerFor]="menu">Purchase</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="navtoPurchase()">Add Purchase</button>
+      <button mat-menu-item (click)="navtoPurchase()">Purchase Menu</button>
+    </mat-menu>
     <button class="NavButton" mat-button routerLink="/sale">Sale</button>
 
     
   <span class="fill-remaining-space"></span>
 
-  <!-- <button mat-icon-button style="margin-right: 10px;">
-    <mat-icon matBadge="0" matBadgeColor="warn">shopping_cart</mat-icon>
-  </button> -->
+  <button (click)="navtoImageUpload()" mat-icon-button  style="margin-right: 10px;">
+    <mat-icon  [matBadge]="imagesCount" matBadgeColor="warn">notification_important</mat-icon>
+  </button>
   <button mat-button>Log In</button>
   </mat-toolbar>
   

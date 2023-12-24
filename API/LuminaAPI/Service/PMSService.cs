@@ -146,6 +146,21 @@ namespace LuminaAPI.Service
                 return false;
             }
         }
+
+        public bool UpdateImage(PADetail paDetail)
+        {
+            try
+            {
+                var filter = Builders<PADetail>.Filter.Eq(p => p._id, paDetail._id);
+                var updatePADetail = Builders<PADetail>.Update.Set(p => p.Image, paDetail.Image);
+                dBHandler.UpdateDocument(filter, updatePADetail);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
     #endregion
 

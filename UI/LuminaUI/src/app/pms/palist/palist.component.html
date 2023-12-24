@@ -20,16 +20,20 @@
           <mat-header-cell *matHeaderCellDef> Color </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{ element.color }} </mat-cell>
         </ng-container>
-        <!-- Add more columns as needed -->
+       
+        <ng-container matColumnDef="Size">
+            <mat-header-cell *matHeaderCellDef> Size </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.size }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Tag">
+            <mat-header-cell *matHeaderCellDef> Tag </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.tag }} </mat-cell>
+          </ng-container>
       
         <ng-container matColumnDef="image">
           <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-          <mat-cell *matCellDef="let element">  <div id="upload-container" class="mat-icon-container">
-    <label (click)="onUploadClick(element.productID, element.categoryID, element.colorID)"  for="file-input" id="upload-icon" class="mat-icon">
-        <mat-icon>cloud_upload</mat-icon>
-    </label>
-    <input type="file" (change)="onFileSelected($event)" id="file-input" style="display: none">
-</div></mat-cell>
+        <mat-cell (click)="viewProduct(element._id)" *matCellDef="let element">  <button mat-raised-button color="primary">View</button> </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

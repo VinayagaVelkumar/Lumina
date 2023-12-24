@@ -167,11 +167,12 @@ namespace LuminaAPI.Controllers
         }
 
         [HttpGet(Name = "GetProductByID")]
-        public ProductDetail GetProductByID(string id)
+        public ProductList GetProductByID(string id)
         {
             try
             {
-                ProductDetail product = this._pmsService.GetByID(id);
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                ProductList product = pMSBusiness.GetProductByID(id);
                 return product;
             }
             catch
@@ -217,6 +218,10 @@ namespace LuminaAPI.Controllers
             {
                 PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
                 List<PAList> pADetails = pMSBusiness.GetPAList(this._colorService, this._tagService, this._sizeService, this._categoryService);
+                if(pADetails !=null && pADetails.Count > 0)
+                {
+                    pADetails = pADetails.Where(x=>x.Count > 0).ToList();
+                }
                 return pADetails;
             }
             catch
@@ -226,13 +231,47 @@ namespace LuminaAPI.Controllers
         }
 
         [HttpGet(Name = "GetAllPAImage")]
-        public List<PAList> GetAllPADWithoutImage()
+        public List<PAImageList> GetAllPADWithoutImage()
         {
             try
             {
                 PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
-                List<PAList> pADetails = pMSBusiness.GetPAList(this._colorService, this._tagService,this._sizeService,this._categoryService).Where(x => x.Image == null || x.Image  == string.Empty).ToList();
+                List<PAImageList> pADetails = pMSBusiness.GetPAListWithoutImage(this._colorService, this._tagService,this._sizeService,this._categoryService);
                 return pADetails;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpGet(Name = "GetAllPAImageCount")]
+        public int GetAllPADWithoutImageCount()
+        {
+            try
+            {
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                List<PAImageList> pADetails = pMSBusiness.GetPAListWithoutImage(this._colorService, this._tagService, this._sizeService, this._categoryService);
+                if (pADetails != null)
+                {
+                    return pADetails.Count;
+                }
+                return 0;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpPut(Name = "UpdatePAImage")]
+        public bool UpdatePAImage(int categoryID, string productID,int colorID, IFormFile image )
+        {
+            try
+            {
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                bool isUpdated = pMSBusiness.UpdatePAImage(categoryID,productID, colorID, image, this._collectionNames);
+                return isUpdated;
             }
             catch
             {

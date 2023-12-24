@@ -10,6 +10,7 @@ import { Size } from '../../shared/Models/Size';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { ProductFilter } from '../../shared/Models/ProductFilter';
 
 @Component({
   selector: 'app-productfilter',
@@ -24,8 +25,8 @@ export class ProductfilterComponent {
   models: Model[] = [];
   sizes: Size[] = [];
   selectedCategoryId:number = 0;
-  selectedModelId:Number = 0;
-  selectedSizeId: Number =0;
+  selectedModelId:number = 0;
+  selectedSizeId: number =0;
   defModel:Model =  new Model(0, 'Any', true);
 
   constructor(private pmsService: PMSService  ,private router: Router) {}
@@ -33,7 +34,6 @@ export class ProductfilterComponent {
   ngOnInit() {
     this.getCategories();
     this.getModels();
-    this.models.push(this.defModel);
   }
 
   getCategories() {
@@ -45,6 +45,7 @@ export class ProductfilterComponent {
   getModels() {
     this.pmsService.getModels().subscribe((models: Model[]) => {
       this.models = models;
+      this.models.unshift(this.defModel);
     });
   }
 
@@ -69,6 +70,7 @@ export class ProductfilterComponent {
 
 gotoList()
 {
-    this.router.navigate(['List', this.selectedCategoryId, this.selectedModelId, this.selectedSizeId]);
+    this.pmsService.setproductFilter(new ProductFilter(this.selectedCategoryId,this.selectedSizeId,this.selectedModelId));
+    this.router.navigate(['List']);
 }
 }

@@ -16,5 +16,7 @@
         public string Tag { get; set; }
 
         public string Purchase { get; set; }
+
+        public string ImageFolder { get; set; }
     }
 }

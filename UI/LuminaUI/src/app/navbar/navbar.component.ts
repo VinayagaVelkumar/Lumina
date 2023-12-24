@@ -3,19 +3,38 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
+import {MatSelectModule} from '@angular/material/select';
+import {MatMenuModule} from '@angular/material/menu';
 import { Router } from '@angular/router';
+import { CommonService } from '../shared/Services/common.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MatToolbarModule,MatButtonModule,MatIconModule,MatBadgeModule],
+  imports: [MatToolbarModule,MatButtonModule,MatIconModule,MatBadgeModule,HttpClientModule,MatSelectModule,MatMenuModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
+  providers: [CommonService]
 })
 export class NavbarComponent {
-  constructor(private router:Router)
+  imagesCount:string = '';
+  constructor(private router:Router, private commonService: CommonService)
   {
 
+  }
+  ngOnInit(): void {  
+   this.commonService.imagesCount$.subscribe((count) => {
+    if(count == 0)
+    {
+      this.imagesCount = '';
+    }
+    else
+    {
+    this.imagesCount = count.toString();
+    }
+  });
+  this.commonService.setImagesCount(0);
   }
   navtoHome() {
     this.router.navigate(['']);
@@ -23,5 +42,13 @@ export class NavbarComponent {
 
   navtoPurchase() {
     this.router.navigate(['Purchase']);
+  }
+
+  navtoImageUpload() {
+    this.router.navigate(['AddImages']);
+  }
+
+  navToProducts() {
+    this.router.navigate(['Products']);
   }
 }

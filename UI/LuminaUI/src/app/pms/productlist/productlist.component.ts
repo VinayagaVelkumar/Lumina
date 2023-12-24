@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { PMSService } from '../../shared/Services/pms.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { ProductFilter } from '../../shared/Models/ProductFilter';
 
 @Component({
   selector: 'app-productlist',
@@ -25,14 +26,11 @@ export class ProductlistComponent {
   }
  Loading:boolean = true;
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const categoryID = params['categoryID'];
-      const modelID = params['modelID'];
-      const sizeID = params['sizeID'];
-
-      this.loadProducts(categoryID,modelID,sizeID);
-    });
-    
+    const prFilter:ProductFilter = this.productService.getproductFilter();
+      const categoryID = prFilter.categoryID;
+      const modelID = prFilter.modelID;
+      const sizeID = prFilter.sizeID;
+      this.loadProducts(categoryID,modelID,sizeID);  
   }
 
   selectProduct(productID:string) {

@@ -5,12 +5,16 @@ import { ProductfilterComponent } from './pms/productfilter/productfilter.compon
 import { PRMSComponent } from './prms/prms.component';
 import { AddPADetailComponent } from './pms/add-padetail/add-padetail.component';
 import { AddProductComponent } from './pms/add-product/add-product.component';
+import { ImageuploadComponent } from './pms/imageupload/imageupload.component';
+import { PAListComponent } from './pms/palist/palist.component';
 
 export const routes: Routes = [
     { path: '', component: ProductfilterComponent },
     { path:'Product/:productID', component: ProductComponent },
-    { path:'List/:categoryID/:modelID/:sizeID', component: ProductlistComponent},
+    { path:'List', component: ProductlistComponent},
     { path:'Purchase', component: PRMSComponent},
     { path:'AddPADetail', component: AddPADetailComponent},
-    { path:'AddProduct', component: AddProductComponent}
+    { path:'AddProduct', component: AddProductComponent},
+    { path:'AddImages', component: ImageuploadComponent},
+    { path:'Products', component: PAListComponent}
 ];
