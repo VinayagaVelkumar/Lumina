@@ -33,9 +33,6 @@ export class ProductlistComponent {
       this.loadProducts(categoryID,modelID,sizeID);  
   }
 
-  selectProduct(productID:string) {
-    this.router.navigate(['/Product',productID ]);
-  }
   private loadProducts(catID:number,modelID:number,sizeID:number): void {
     this.productService.getProducts(catID,modelID,sizeID).subscribe(
       (products: ProductList[]) => {

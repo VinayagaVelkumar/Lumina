@@ -51,4 +51,8 @@ export class NavbarComponent {
   navToProducts() {
     this.router.navigate(['Products']);
   }
+
+  navToSales() {
+    this.router.navigate(['Sale']);
+  }
 }

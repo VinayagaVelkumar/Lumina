@@ -7,6 +7,8 @@ import { AddPADetailComponent } from './pms/add-padetail/add-padetail.component'
 import { AddProductComponent } from './pms/add-product/add-product.component';
 import { ImageuploadComponent } from './pms/imageupload/imageupload.component';
 import { PAListComponent } from './pms/palist/palist.component';
+import { SLMSComponent } from './slms/slms.component';
+import { AddSaleComponent } from './slms/add-sale/add-sale.component';
 
 export const routes: Routes = [
     { path: '', component: ProductfilterComponent },
@@ -16,5 +18,7 @@ export const routes: Routes = [
     { path:'AddPADetail', component: AddPADetailComponent},
     { path:'AddProduct', component: AddProductComponent},
     { path:'AddImages', component: ImageuploadComponent},
-    { path:'Products', component: PAListComponent}
+    { path:'Products', component: PAListComponent},
+    { path:'Sale', component: SLMSComponent},
+    { path:'AddSale', component: AddSaleComponent}
 ];
