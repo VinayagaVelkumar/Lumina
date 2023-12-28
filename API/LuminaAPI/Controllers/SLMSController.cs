@@ -18,8 +18,9 @@ namespace LuminaAPI.Controllers
         private readonly IPRMSService _prmsService;
         private readonly CollectionNames _collectionNames;
         private readonly ConnectionConfig _connectionConfig;
+        private readonly ILogger<SLMSController> _logger;
 
-        public SLMSController(ISLMSService slmsService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADService padService, IPADTransService padTransService, IPMSService pmsService,IPRMSService pRMSService)
+        public SLMSController(ISLMSService slmsService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADService padService, IPADTransService padTransService, IPMSService pmsService, IPRMSService pRMSService, ILogger<SLMSController> logger)
         {
             this._slmsService = slmsService;
             this._collectionNames = collectionNames;
@@ -28,6 +29,7 @@ namespace LuminaAPI.Controllers
             this._padService = padService;
             this._padTransService = padTransService;
             this._prmsService = pRMSService;
+            _logger = logger;
         }
         [HttpGet(Name = "GetSales")]
         public List<SaleDetail> GetSales()
@@ -37,9 +39,9 @@ namespace LuminaAPI.Controllers
                 List<SaleDetail> sales = this._slmsService.GetAll();
                 return sales;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw; ;
             }
         }
 
@@ -51,9 +53,9 @@ namespace LuminaAPI.Controllers
                 SaleDetail sale = this._slmsService.GetByID(id);
                 return sale;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw; ;
             }
         }
 
@@ -62,13 +64,13 @@ namespace LuminaAPI.Controllers
         {
             try
             {
-                SLMSBusiness slmsBusiness = new SLMSBusiness(this._pmsService,this._padService,this._padTransService,this._prmsService,this._slmsService);
+                SLMSBusiness slmsBusiness = new SLMSBusiness(this._pmsService, this._padService, this._padTransService, this._prmsService, this._slmsService);
                 bool isCreated = slmsBusiness.AddSale(saleData.padID, saleData.soldPrice, saleData.Count);
                 return isCreated;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw; ;
             }
         }
 
@@ -80,9 +82,9 @@ namespace LuminaAPI.Controllers
                 bool isUpdated = this._slmsService.Update(sale);
                 return isUpdated;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw; ;
             }
         }
     }

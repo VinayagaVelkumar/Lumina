@@ -27,10 +27,9 @@ namespace LuminaAPI.Service
                 List<PurchaseDetail> products = dBHandler.GetAllDocuments();
                 return products;
             }
-            catch (Exception ex)
+            catch
             {
-                var msg = ex.Message;
-                return null;
+                throw;
             }
         }
 
@@ -44,7 +43,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return null;
+                throw;
             }
         }
 
@@ -57,7 +56,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return false;
+                throw;
             }
         }
 
@@ -72,7 +71,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return false;
+                throw;
             }
         }
     }

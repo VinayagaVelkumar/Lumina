@@ -1,11 +1,13 @@
 using LuminaAPI.Model.Config;
 using LuminaAPI.Service;
 using LuminaAPI.Service.Interface;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 // Add services to the container.
 builder.Services.Configure<CollectionNames>(builder.Configuration.GetSection("CollectionNames"));
 builder.Services.Configure<ConnectionConfig>(builder.Configuration.GetSection("ConnectionConfig"));

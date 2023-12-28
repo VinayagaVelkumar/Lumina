@@ -31,8 +31,8 @@ namespace LuminaAPI.Service
             }
             catch(Exception ex)
             {
-                var msg = ex.Message;
-                return null;
+                
+                throw;
             }
         }
 
@@ -45,7 +45,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return false;
+                throw;
             }
         }
 
@@ -60,7 +60,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return false;
+                throw;
             }
         }
 
@@ -73,7 +73,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return null;
+                throw;
             }
         }
     }
@@ -99,10 +99,10 @@ namespace LuminaAPI.Service
                 List<PADetail> paDetails = dBHandler.GetAllDocuments();
                 return paDetails;
             }
-            catch (Exception ex)
+            catch
             {
-                var msg = ex.Message;
-                return null;
+                
+                throw;
             }
         }
 
@@ -115,7 +115,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return null;
+                throw;
             }
         }
 
@@ -128,7 +128,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return false;
+                throw;
             }
         }
 
@@ -143,7 +143,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return false;
+                throw;
             }
         }
 
@@ -158,7 +158,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return false;
+                throw;
             }
         }
     }
@@ -184,10 +184,10 @@ namespace LuminaAPI.Service
                 List<PADTrans> paTransacs = dBHandler.GetAllDocuments();
                 return paTransacs;
             }
-            catch (Exception ex)
+            catch
             {
-                var msg = ex.Message;
-                return null;
+                
+                throw;
             }
         }
 
@@ -200,7 +200,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return null;
+                throw;
             }
         }
 
@@ -213,7 +213,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return false;
+                throw;
             }
         }
 
@@ -230,7 +230,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return false;
+                throw;
             }
         }
     }
@@ -256,10 +256,10 @@ namespace LuminaAPI.Service
                 List<AliasDetail> aliasDetails = dBHandler.GetAllDocuments();
                 return aliasDetails;
             }
-            catch (Exception ex)
+            catch
             {
-                var msg = ex.Message;
-                return null;
+                
+                throw;
             }
         }
 
@@ -272,7 +272,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return null;
+                throw;
             }
         }
     }
@@ -298,10 +298,9 @@ namespace LuminaAPI.Service
                 List<ColorDetail> colorDetails = dBHandler.GetAllDocuments();
                 return colorDetails;
             }
-            catch (Exception ex)
+            catch
             {
-                var msg = ex.Message;
-                return null;
+                throw;
             }
         }
 
@@ -314,7 +313,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return null;
+                throw;
             }
         }
     }
@@ -340,10 +339,10 @@ namespace LuminaAPI.Service
                 List<CategoryDetail> categoryDetails = dBHandler.GetAllDocuments();
                 return categoryDetails;
             }
-            catch (Exception ex)
+            catch
             {
-                var msg = ex.Message;
-                return null;
+                
+                throw;
             }
         }
 
@@ -356,7 +355,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return null;
+                throw;
             }
         }
     }
@@ -382,10 +381,10 @@ namespace LuminaAPI.Service
                 List<SizeDetail> sizeDetails = dBHandler.GetAllDocuments();
                 return sizeDetails;
             }
-            catch (Exception ex)
+            catch
             {
-                var msg = ex.Message;
-                return null;
+                
+                throw;
             }
         }
 
@@ -398,7 +397,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return null;
+                throw;
             }
         }
     }
@@ -424,10 +423,10 @@ namespace LuminaAPI.Service
                 List<ModelDetail> modelDetails = dBHandler.GetAllDocuments();
                 return modelDetails;
             }
-            catch (Exception ex)
+            catch
             {
-                var msg = ex.Message;
-                return null;
+                
+                throw;
             }
         }
 
@@ -440,7 +439,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return null;
+                throw;
             }
         }
     }
@@ -466,10 +465,10 @@ namespace LuminaAPI.Service
                 List<ImageDetail> imageDetails = dBHandler.GetAllDocuments();
                 return imageDetails;
             }
-            catch (Exception ex)
+            catch
             {
-                var msg = ex.Message;
-                return null;
+                
+                throw;
             }
         }
 
@@ -482,7 +481,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return null;
+                throw;
             }
         }
     }
@@ -508,10 +507,10 @@ namespace LuminaAPI.Service
                 List<BrandDetail> brandDetails = dBHandler.GetAllDocuments();
                 return brandDetails;
             }
-            catch (Exception ex)
+            catch
             {
-                var msg = ex.Message;
-                return null;
+                
+                throw;
             }
         }
 
@@ -524,7 +523,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return null;
+                throw;
             }
         }
     }
@@ -550,10 +549,10 @@ namespace LuminaAPI.Service
                 List<TagDetail> tagDetails = dBHandler.GetAllDocuments();
                 return tagDetails;
             }
-            catch (Exception ex)
+            catch
             {
-                var msg = ex.Message;
-                return null;
+                
+                throw;
             }
         }
 
@@ -566,7 +565,7 @@ namespace LuminaAPI.Service
             }
             catch
             {
-                return null;
+                throw;
             }
         }
     }

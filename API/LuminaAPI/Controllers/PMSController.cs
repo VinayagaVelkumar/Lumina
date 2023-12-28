@@ -25,9 +25,11 @@ namespace LuminaAPI.Controllers
         private readonly ITagService _tagService;
         private readonly CollectionNames _collectionNames;
         private readonly ConnectionConfig _connectionConfig;
+        private readonly ILogger<PMSController> _logger;
+
 
         #region Constructer
-        public PMSController(IPMSService pmsService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADService padService, IPADTransService padTransService, IAliasService aliasService, IColorService colorService,ICategoryService categoryService, ISizeService sizeService, IModelService modelService, IImageService imageService, IBrandService brandService, ITagService tagService)
+        public PMSController(IPMSService pmsService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADService padService, IPADTransService padTransService, IAliasService aliasService, IColorService colorService, ICategoryService categoryService, ISizeService sizeService, IModelService modelService, IImageService imageService, IBrandService brandService, ITagService tagService, ILogger<PMSController> logger)
         {
             this._pmsService = pmsService;
             this._padService = padService;
@@ -41,7 +43,8 @@ namespace LuminaAPI.Controllers
             this._brandService = brandService;
             this._tagService = tagService;
             this._collectionNames = collectionNames;
-            this._connectionConfig = connectionConfig;          
+            this._connectionConfig = connectionConfig;
+            this._logger = logger;
         }
         #endregion
 
@@ -50,12 +53,13 @@ namespace LuminaAPI.Controllers
         {
             try
             {
-                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService); 
-                List<ProductList> products = pMSBusiness.GetProductLists(categoryID,sizeID,modelID);
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                List<ProductList> products = pMSBusiness.GetProductLists(categoryID, sizeID, modelID);
                 return products;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -69,8 +73,9 @@ namespace LuminaAPI.Controllers
                 List<CategoryDetail> categories = pMSBusiness.GetCategoryDetails(this._categoryService);
                 return categories;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -84,8 +89,9 @@ namespace LuminaAPI.Controllers
                 List<ModelDetail> models = pMSBusiness.GetModelDetails(this._modelService);
                 return models;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -99,8 +105,9 @@ namespace LuminaAPI.Controllers
                 List<SizeDetail> sizes = pMSBusiness.GetSizeDetails(this._sizeService, categoryID);
                 return sizes;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -114,8 +121,9 @@ namespace LuminaAPI.Controllers
                 List<ColorDetail> colors = pMSBusiness.GetColors(this._colorService);
                 return colors;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -129,8 +137,9 @@ namespace LuminaAPI.Controllers
                 List<TagDetail> tags = pMSBusiness.GetTags(this._tagService);
                 return tags;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -144,14 +153,15 @@ namespace LuminaAPI.Controllers
                 List<BrandDetail> brands = this._brandService.GetAll().Where(x => x.IsActive == true).ToList();
                 return brands;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
 
         #region Product Detail
-        [HttpGet(Name ="GetProducts")]
+        [HttpGet(Name = "GetProducts")]
         public List<ProductDetail> GetProducts()
         {
             try
@@ -160,8 +170,9 @@ namespace LuminaAPI.Controllers
                 List<ProductDetail> products = pMSBusiness.GetProducts(this._brandService, this._modelService);
                 return products;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -175,8 +186,9 @@ namespace LuminaAPI.Controllers
                 ProductList product = pMSBusiness.GetProductByID(id);
                 return product;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -189,8 +201,9 @@ namespace LuminaAPI.Controllers
                 bool isCreated = this._pmsService.Insert(product);
                 return isCreated;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -203,29 +216,31 @@ namespace LuminaAPI.Controllers
                 bool isUpdated = this._pmsService.Update(product);
                 return isUpdated;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
         #endregion
 
         #region Product Availability Detail
-        [HttpGet(Name ="GetAllPA")]
+        [HttpGet(Name = "GetAllPA")]
         public List<PAList> GetAllPAD()
         {
             try
             {
                 PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
                 List<PAList> pADetails = pMSBusiness.GetPAList(this._colorService, this._tagService, this._sizeService, this._categoryService);
-                if(pADetails !=null && pADetails.Count > 0)
+                if (pADetails != null && pADetails.Count > 0)
                 {
-                    pADetails = pADetails.Where(x=>x.Count > 0).OrderByDescending(x => x.ProductID).OrderByDescending(x => x.SizeID).ToList();
+                    pADetails = pADetails.Where(x => x.Count > 0).OrderByDescending(x => x.ProductID).OrderByDescending(x => x.SizeID).ToList();
                 }
                 return pADetails;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -236,11 +251,12 @@ namespace LuminaAPI.Controllers
             try
             {
                 PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
-                List<PAImageList> pADetails = pMSBusiness.GetPAListWithoutImage(this._colorService, this._tagService,this._sizeService,this._categoryService);
+                List<PAImageList> pADetails = pMSBusiness.GetPAListWithoutImage(this._colorService, this._tagService, this._sizeService, this._categoryService);
                 return pADetails;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -258,23 +274,25 @@ namespace LuminaAPI.Controllers
                 }
                 return 0;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
 
         [HttpPut(Name = "UpdatePAImage")]
-        public bool UpdatePAImage(int categoryID, string productID,int colorID, IFormFile image )
+        public bool UpdatePAImage(int categoryID, string productID, int colorID, IFormFile image)
         {
             try
             {
                 PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
-                bool isUpdated = pMSBusiness.UpdatePAImage(categoryID,productID, colorID, image, this._collectionNames);
+                bool isUpdated = pMSBusiness.UpdatePAImage(categoryID, productID, colorID, image, this._collectionNames);
                 return isUpdated;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -287,8 +305,9 @@ namespace LuminaAPI.Controllers
                 PADetail pADetail = this._padService.GetByID(id);
                 return pADetail;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -301,8 +320,9 @@ namespace LuminaAPI.Controllers
                 bool isCreated = this._padService.Insert(paDetail);
                 return isCreated;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -315,8 +335,9 @@ namespace LuminaAPI.Controllers
                 bool isUpdated = this._padService.Update(paDetail);
                 return isUpdated;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -331,8 +352,9 @@ namespace LuminaAPI.Controllers
                 List<PADTrans> pATransacs = this._padTransService.GetAll();
                 return pATransacs;
             }
-            catch
+            catch (Exception ex)
             {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
             }
         }
@@ -345,9 +367,9 @@ namespace LuminaAPI.Controllers
                 PADTrans pATrans = this._padTransService.GetByID(id);
                 return pATrans;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -359,9 +381,9 @@ namespace LuminaAPI.Controllers
                 bool isCreated = this._padTransService.Insert(paTrans);
                 return isCreated;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -373,9 +395,9 @@ namespace LuminaAPI.Controllers
                 bool isUpdated = this._padTransService.Update(paTrans);
                 return isUpdated;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
         #endregion
@@ -390,9 +412,9 @@ namespace LuminaAPI.Controllers
                 List<AliasDetail> aliasDetails = this._aliasService.GetAll();
                 return aliasDetails;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -404,9 +426,9 @@ namespace LuminaAPI.Controllers
                 AliasDetail aliasDetail = this._aliasService.GetByID(id);
                 return aliasDetail;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -422,9 +444,9 @@ namespace LuminaAPI.Controllers
                 List<ColorDetail> colorDetails = this._colorService.GetAll();
                 return colorDetails;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -436,9 +458,9 @@ namespace LuminaAPI.Controllers
                 ColorDetail colorDetail = this._colorService.GetByID(id);
                 return colorDetail;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -454,9 +476,9 @@ namespace LuminaAPI.Controllers
                 List<CategoryDetail> categoryDetails = this._categoryService.GetAll();
                 return categoryDetails;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -468,9 +490,9 @@ namespace LuminaAPI.Controllers
                 CategoryDetail categoryDetail = this._categoryService.GetByID(id);
                 return categoryDetail;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -486,9 +508,9 @@ namespace LuminaAPI.Controllers
                 List<SizeDetail> sizeDetails = this._sizeService.GetAll();
                 return sizeDetails;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -500,9 +522,9 @@ namespace LuminaAPI.Controllers
                 SizeDetail sizeDetail = this._sizeService.GetByID(id);
                 return sizeDetail;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -518,9 +540,9 @@ namespace LuminaAPI.Controllers
                 List<ModelDetail> modelDetails = this._modelService.GetAll();
                 return modelDetails;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -532,9 +554,9 @@ namespace LuminaAPI.Controllers
                 ModelDetail modelDetail = this._modelService.GetByID(id);
                 return modelDetail;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -550,9 +572,9 @@ namespace LuminaAPI.Controllers
                 List<ImageDetail> imageDetails = this._imageService.GetAll();
                 return imageDetails;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 
@@ -564,9 +586,9 @@ namespace LuminaAPI.Controllers
                 ImageDetail imageDetail = this._imageService.GetByID(id);
                 return imageDetail;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw;
             }
         }
 

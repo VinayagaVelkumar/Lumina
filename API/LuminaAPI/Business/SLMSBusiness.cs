@@ -49,9 +49,9 @@ namespace LuminaAPI.Business
                 }
                 return false;
             }
-            catch(Exception ex)
+            catch
             {
-                return false;
+                throw;
             }
         }
     }

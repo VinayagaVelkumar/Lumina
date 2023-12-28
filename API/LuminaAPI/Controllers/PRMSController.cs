@@ -19,8 +19,9 @@ namespace LuminaAPI.Controllers
         private readonly IPADTransService _padTransService;
         private readonly CollectionNames _collectionNames;
         private readonly ConnectionConfig _connectionConfig;
+        private readonly ILogger<PRMSController> _logger;
 
-        public PRMSController(IPRMSService prmsService,IPMSService pMSService, IPADService padService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADTransService pADTransService)
+        public PRMSController(IPRMSService prmsService, IPMSService pMSService, IPADService padService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADTransService pADTransService, ILogger<PRMSController> logger)
         {
             this._prmsService = prmsService;
             this._pmsService = pMSService;
@@ -28,6 +29,7 @@ namespace LuminaAPI.Controllers
             this._padTransService = pADTransService;
             this._collectionNames = collectionNames;
             this._connectionConfig = connectionConfig;
+            _logger = logger;
         }
         [HttpGet(Name = "GetPurchases")]
         public List<PurchaseDetail> GetPurchases()
@@ -37,9 +39,9 @@ namespace LuminaAPI.Controllers
                 List<PurchaseDetail> purchases = this._prmsService.GetAll();
                 return purchases;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw; ;
             }
         }
 
@@ -51,9 +53,9 @@ namespace LuminaAPI.Controllers
                 PurchaseDetail purchase = this._prmsService.GetByID(id);
                 return purchase;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw; ;
             }
         }
 
@@ -66,9 +68,9 @@ namespace LuminaAPI.Controllers
                 bool isCreated = pRMSBusiness.AddPurchaseDetail(purDetail);
                 return isCreated;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw; ;
             }
         }
 
@@ -80,9 +82,9 @@ namespace LuminaAPI.Controllers
                 bool isUpdated = this._prmsService.Update(purchase);
                 return isUpdated;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw; ;
             }
         }
     }
