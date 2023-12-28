@@ -6,7 +6,7 @@
 
         public int CategoryID { get; set; }
 
-        public int SizeID { get; set; }
+        public List<int> SizeIDs { get; set; }
 
         public int ColorID { get; set; }
 

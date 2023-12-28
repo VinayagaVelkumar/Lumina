@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../Models/Product';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrmsService {
-  private apiPLUrl = 'https://localhost:7117/api/PMS/GetProducts';
-  private apiAPUrl = 'https://localhost:7117/api/PRMS/AddPurchase';
+  private apiPLUrl = `${environment.pmsAPI}GetProducts`;
+  private apiAPUrl = `${environment.prmsAPI}AddPurchase`;
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {

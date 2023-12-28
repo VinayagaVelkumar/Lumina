@@ -1,4 +1,5 @@
-﻿using LuminaAPI.Model.Config;
+﻿using LuminaAPI.Business;
+using LuminaAPI.Model.Config;
 using LuminaAPI.Model.SLMS;
 using LuminaAPI.Service.Interface;
 using Microsoft.AspNetCore.Http;
@@ -10,15 +11,23 @@ namespace LuminaAPI.Controllers
     [ApiController]
     public class SLMSController : ControllerBase
     {
+        private readonly IPMSService _pmsService;
+        private readonly IPADService _padService;
+        private readonly IPADTransService _padTransService;
         private readonly ISLMSService _slmsService;
+        private readonly IPRMSService _prmsService;
         private readonly CollectionNames _collectionNames;
         private readonly ConnectionConfig _connectionConfig;
 
-        public SLMSController(ISLMSService slmsService, CollectionNames collectionNames, ConnectionConfig connectionConfig)
+        public SLMSController(ISLMSService slmsService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADService padService, IPADTransService padTransService, IPMSService pmsService,IPRMSService pRMSService)
         {
             this._slmsService = slmsService;
             this._collectionNames = collectionNames;
             this._connectionConfig = connectionConfig;
+            this._pmsService = pmsService;
+            this._padService = padService;
+            this._padTransService = padTransService;
+            this._prmsService = pRMSService;
         }
         [HttpGet(Name = "GetSales")]
         public List<SaleDetail> GetSales()
@@ -48,12 +57,13 @@ namespace LuminaAPI.Controllers
             }
         }
 
-        [HttpPost(Name = "InsertSale")]
-        public bool InsertSale(SaleDetail sale)
+        [HttpPost(Name = "AddSale")]
+        public bool AddSale([FromBody] SaleData saleData)
         {
             try
             {
-                bool isCreated = this._slmsService.Insert(sale);
+                SLMSBusiness slmsBusiness = new SLMSBusiness(this._pmsService,this._padService,this._padTransService,this._prmsService,this._slmsService);
+                bool isCreated = slmsBusiness.AddSale(saleData.padID, saleData.soldPrice, saleData.Count);
                 return isCreated;
             }
             catch

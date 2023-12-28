@@ -222,7 +222,9 @@ namespace LuminaAPI.Service
             try
             {
                 var filter = Builders<PADTrans>.Filter.Eq(p => p._id, paDetail._id);
-                var updatePATransDetail = Builders<PADTrans>.Update.Set(p => p, paDetail);
+                var updatePATransDetail = Builders<PADTrans>.Update.Set(p => p.Count, paDetail.Count)
+                                                                    .Set(p => p.MRP, paDetail.MRP)
+                                                                    .Set(p => p.Price, paDetail.Price);
                 dBHandler.UpdateDocument(filter, updatePATransDetail);
                 return true;
             }

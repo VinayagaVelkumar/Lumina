@@ -12,11 +12,12 @@ import { Router } from '@angular/router';
 import { PrmsService } from '../../shared/Services/prms.service';
 import { Color } from '../../shared/Models/Color';
 import { Tag } from '../../shared/Models/Tag';
+import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-padetail',
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule,HttpClientModule,MatButtonModule],
+  imports: [MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule,HttpClientModule,MatButtonModule,MatSnackBarModule],
   templateUrl: './add-padetail.component.html',
   styleUrl: './add-padetail.component.css',
   providers: [PMSService,PrmsService]
@@ -27,7 +28,7 @@ export class AddPADetailComponent {
   colors: Color[] = [];
   tags: Tag[] =[];
   selectedCategoryId:number = 0;
-  selectedSizeId: Number =0;
+  selectedSizes: number[] = [];
   selectedColorId: Number =0;
   mrp:number =0;
   count:number =0;
@@ -36,7 +37,7 @@ export class AddPADetailComponent {
   tagID:number =0;
 
   productID: string = '';
-  constructor(private pmsService: PMSService  ,private router: Router, private prmsService: PrmsService) {}
+  constructor(private pmsService: PMSService  ,private router: Router, private prmsService: PrmsService,private snackBar:MatSnackBar) {}
   
   ngOnInit() {
     this.getCategories();
@@ -68,9 +69,6 @@ export class AddPADetailComponent {
     this.getSizes(categoryId);
   }
 
-  onSizeSelected(sizeID: number) {
-    this.selectedSizeId = sizeID;
-  }
 
   onColorSelected(colorID: number) {
     this.selectedColorId = colorID;
@@ -86,22 +84,36 @@ export class AddPADetailComponent {
     });
 }
 
+openSuccessMessage(message: string): void {
+  this.snackBar.open(message, 'Close', {
+    duration: 5000,
+    verticalPosition: 'top',
+    panelClass: ['success-snackbar'],
+  });
+}
+
+
+trackBySizeID(index: number, size: any): number {
+  return size.sizeID;
+}
+
 addPurchase()
 {
   const data = {
     ProductID: this.productID,
     CategoryId: this.selectedCategoryId,
-    SizeId: this.selectedSizeId,
+    SizeIDs: this.selectedSizes,
     ColorId: this.selectedColorId,
-    MRP: this.mrp,
-    Count: this.count,
-    PurchasePrice: this.purPrice,
-    DiscountCode: this.discount,
+    MRP: this .pmsService.removeLeadingZeros(this.mrp),
+    Count: this .pmsService.removeLeadingZeros(this.count),
+    PurchasePrice: this .pmsService.removeLeadingZeros(this.purPrice),
+    DiscountCode: this .pmsService.removeLeadingZeros(this.discount),
     TagID: this.tagID
   };
 
   this.prmsService.addPurchase(data).subscribe(
     (response) => {
+      this.openSuccessMessage('Successfully Saved !')
       this.router.navigate(['Purchase'])
     },
     (error) => {

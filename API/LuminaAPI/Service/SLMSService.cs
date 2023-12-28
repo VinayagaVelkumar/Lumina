@@ -17,7 +17,7 @@ namespace LuminaAPI.Service
         {
             this._collectionNames = collectionNames;
             this._connectionConfig = connectionConfig;
-            dBHandler = new MongoDBHandler<SaleDetail>(this._connectionConfig.ConnectionString, this._connectionConfig.DBName, this._collectionNames.Product);
+            dBHandler = new MongoDBHandler<SaleDetail>(this._connectionConfig.ConnectionString, this._connectionConfig.DBName, this._collectionNames.Sale);
         }
 
         public List<SaleDetail> GetAll()
@@ -66,7 +66,7 @@ namespace LuminaAPI.Service
             try
             {
                 var filter = Builders<SaleDetail>.Filter.Eq(p => p._id, saleDetail._id);
-                var updateSale = Builders<SaleDetail>.Update.Set(p => p, saleDetail);
+                var updateSale = Builders<SaleDetail>.Update.Set(p => p.Count, saleDetail.Count);
                 dBHandler.UpdateDocument(filter, updateSale);
                 return true;
             }

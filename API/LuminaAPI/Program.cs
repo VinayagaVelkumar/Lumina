@@ -25,6 +25,7 @@ builder.Services.AddTransient<IPMSService, PMSService>();
 builder.Services.AddTransient<IPRMSService, PRMSService>();
 builder.Services.AddTransient<IPADService, PADService>();
 builder.Services.AddTransient<IPADTransService, PADTransService>();
+builder.Services.AddTransient<ISLMSService, SLMSService>();
 builder.Services.AddTransient<IAliasService, AliasService>();
 builder.Services.AddTransient<IColorService, ColorService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();

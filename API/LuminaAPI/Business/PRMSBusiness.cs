@@ -21,6 +21,8 @@ namespace LuminaAPI.Business
 
         public bool AddPurchaseDetail(PurchaseDetailFromUI detailFromUI)
         {
+            foreach (int SizeID in detailFromUI.SizeIDs)
+            {     
             PurchaseDetail purchaseDetail = new PurchaseDetail();
             purchaseDetail.ProductID = detailFromUI.ProductID;
             purchaseDetail.MRP = detailFromUI.MRP;
@@ -29,14 +31,14 @@ namespace LuminaAPI.Business
             purchaseDetail.Count = detailFromUI.Count;
             purchaseDetail.DiscountCode = detailFromUI.DiscountCode;
 
-            PADetail pADetail = this.pADService.GetAll().Where(x => x.ProductID == detailFromUI.ProductID && x.CategoryID == detailFromUI.CategoryID && x.SizeID == detailFromUI.SizeID && x.ColorID == detailFromUI.ColorID && x.TagID == detailFromUI.TagID).FirstOrDefault();
+            PADetail pADetail = this.pADService.GetAll().Where(x => x.ProductID == detailFromUI.ProductID && x.CategoryID == detailFromUI.CategoryID && x.SizeID == SizeID && x.ColorID == detailFromUI.ColorID && x.TagID == detailFromUI.TagID).FirstOrDefault();
             if (pADetail == null)
             {
                 ProductDetail product = this.pMSService.GetAll().Where(x=>x.ProductID == detailFromUI.ProductID).FirstOrDefault();
                 PADetail newPADetail = new PADetail();
                 newPADetail.ProductID = detailFromUI.ProductID;
                 newPADetail.CategoryID = detailFromUI.CategoryID;
-                newPADetail.SizeID = detailFromUI.SizeID;
+                newPADetail.SizeID = SizeID;
                 newPADetail.ColorID = detailFromUI.ColorID;
                 newPADetail.TagID = detailFromUI.TagID;
                 newPADetail.IsActive = true;
@@ -44,7 +46,7 @@ namespace LuminaAPI.Business
                 bool isInserted = this.pADService.Insert(newPADetail);
                 if(isInserted)
                 {
-                    pADetail = this.pADService.GetAll().Where(x => x.ProductID == detailFromUI.ProductID && x.CategoryID == detailFromUI.CategoryID && x.SizeID == detailFromUI.SizeID && x.ColorID == detailFromUI.ColorID && x.TagID == detailFromUI.TagID).FirstOrDefault();
+                    pADetail = this.pADService.GetAll().Where(x => x.ProductID == detailFromUI.ProductID && x.CategoryID == detailFromUI.CategoryID && x.SizeID == SizeID && x.ColorID == detailFromUI.ColorID && x.TagID == detailFromUI.TagID).FirstOrDefault();
                 }
             }
 
@@ -71,6 +73,7 @@ namespace LuminaAPI.Business
             }
 
             bool createPurchase = this.pRMSService.Insert(purchaseDetail);
+                }
             return true;
         }
     }

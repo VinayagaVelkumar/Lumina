@@ -12,11 +12,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import {NgxImageCompressService} from 'ngx-image-compress';
 import { Product } from '../../shared/Models/Product';
+import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [FormsModule, MatInputModule, MatSelectModule, MatFormFieldModule,HttpClientModule,MatButtonModule],
+  imports: [FormsModule, MatInputModule, MatSelectModule, MatFormFieldModule,HttpClientModule,MatButtonModule,MatSnackBarModule],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.css',
   providers: [PMSService,PrmsService]
@@ -28,7 +29,7 @@ export class AddProductComponent {
   selectedModel: number =0;
   productID: string = '';
   productName: string = '';
-  constructor(private pmsService: PMSService  ,private router: Router, private prmsService: PrmsService,private imageCompress: NgxImageCompressService) {}
+  constructor(private pmsService: PMSService  ,private router: Router, private prmsService: PrmsService,private imageCompress: NgxImageCompressService, private snackBar: MatSnackBar) {}
   
   ngOnInit() {
     this.getBrands();
@@ -55,6 +56,14 @@ export class AddProductComponent {
     this.selectedModel = modelID;
   }
 
+  openSuccessMessage(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar'],
+    });
+  }
+
 addProduct()
 {
   const data:Product = {
@@ -70,6 +79,7 @@ addProduct()
 
   this.pmsService.addProduct(data).subscribe(
     (response) => {
+      this.openSuccessMessage('Successfully Saved !')
       this.router.navigate(['Purchase'])
     },
     (error) => {

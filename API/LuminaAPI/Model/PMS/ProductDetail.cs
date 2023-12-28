@@ -25,8 +25,6 @@ namespace LuminaAPI.Model.PMS
 
         [BsonIgnore]
         public string Model {  get; set; }  
-
-        public string Image { get; set; }
     }
 
 }

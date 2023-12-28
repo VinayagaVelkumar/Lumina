@@ -220,7 +220,7 @@ namespace LuminaAPI.Controllers
                 List<PAList> pADetails = pMSBusiness.GetPAList(this._colorService, this._tagService, this._sizeService, this._categoryService);
                 if(pADetails !=null && pADetails.Count > 0)
                 {
-                    pADetails = pADetails.Where(x=>x.Count > 0).ToList();
+                    pADetails = pADetails.Where(x=>x.Count > 0).OrderByDescending(x => x.ProductID).OrderByDescending(x => x.SizeID).ToList();
                 }
                 return pADetails;
             }

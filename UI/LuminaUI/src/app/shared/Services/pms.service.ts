@@ -11,24 +11,24 @@ import { Product } from '../Models/Product';
 import { Brand } from '../Models/Brand';
 import { PAList } from '../Models/PAList';
 import { ProductFilter } from '../Models/ProductFilter';
-
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PMSService {
-  private apiPLUrl = 'https://localhost:7117/api/PMS/GetProductList';
-  private apiPRByIDUrl = 'https://localhost:7117/api/PMS/GetProductByID';
-  private apiCategoryUrl = 'https://localhost:7117/api/PMS/GetCategories';
-  private apiSizeUrl = 'https://localhost:7117/api/PMS/GetSizes';
-  private apiModelUrl = 'https://localhost:7117/api/PMS/GetModels';
-  private apiColorUrl = 'https://localhost:7117/api/PMS/GetColors';
-  private apiTagUrl = 'https://localhost:7117/api/PMS/GetTags';
-  private apiAddProductUrl = 'https://localhost:7117/api/PMS/InsertProduct';
-  private apiBrandUrl = 'https://localhost:7117/api/PMS/GetBrands';
-  private apiPAListUrl = 'https://localhost:7117/api/PMS/GetAllPAD'; 
-  private apiPAImageUrl = 'https://localhost:7117/api/PMS/GetAllPADWithoutImage'; 
-  private apiPAImageUploadURL = 'https://localhost:7117/api/PMS/UpdatePAImage'; 
+  private apiPLUrl = `${environment.pmsAPI}GetProductList`;
+  private apiPRByIDUrl = `${environment.pmsAPI}GetProductByID`;
+  private apiCategoryUrl = `${environment.pmsAPI}GetCategories`;
+  private apiSizeUrl = `${environment.pmsAPI}GetSizes`;
+  private apiModelUrl = `${environment.pmsAPI}GetModels`;
+  private apiColorUrl = `${environment.pmsAPI}GetColors`;
+  private apiTagUrl = `${environment.pmsAPI}GetTags`;
+  private apiAddProductUrl = `${environment.pmsAPI}InsertProduct`;
+  private apiBrandUrl = `${environment.pmsAPI}GetBrands`;
+  private apiPAListUrl = `${environment.pmsAPI}GetAllPAD`; 
+  private apiPAImageUrl = `${environment.pmsAPI}GetAllPADWithoutImage`; 
+  private apiPAImageUploadURL = `${environment.pmsAPI}UpdatePAImage`; 
 
   constructor(private http: HttpClient) {}
 
@@ -103,5 +103,15 @@ export class PMSService {
     }
     
     return this.http.put<boolean>(`${this.apiPAImageUploadURL}${queryParams}`, formData);
+  }
+
+   removeLeadingZeros(value: number): number {
+    // Convert the number to a string and remove leading zeros
+    const stringValue = value.toString().replace(/^0+/, '');
+  
+    // Convert the string back to a number
+    const result = parseInt(stringValue, 10);
+  
+    return isNaN(result) ? 0 : result;
   }
 }

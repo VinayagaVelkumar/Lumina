@@ -1,18 +1,17 @@
 <mat-toolbar style="margin-bottom: 20px" color="primary">
-    <button mat-button (click)="navtoHome()">Home</button>
-    <button mat-button (click)="navToProducts()">Products</button>
-    <button class="NavButton" mat-button [matMenuTriggerFor]="menu">Purchase</button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="navtoPurchase()">Add Purchase</button>
-      <button mat-menu-item (click)="navtoPurchase()">Purchase Menu</button>
-    </mat-menu>
-    <button class="NavButton" (click)="navToSales()" mat-button>Sale</button>
-
-    
+  <button mat-button routerLink="./" routerLinkActive="activenavbar"  [routerLinkActiveOptions]="{exact:true}" (click)="navtoHome()">Home</button>
+  <button mat-button style="margin-left: 10px;" routerLink="/Products" routerLinkActive="activenavbar" (click)="navToProducts()">Products</button>
+  <button class="NavButton" id="prButton" appHighlightActive mat-button [matMenuTriggerFor]="menu">Purchase</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/Purchase" routerLinkActive="activenavbar" (click)="navtoPurchase()">Add Purchase</button>
+    <button mat-menu-item  routerLink="/PurchaseMenu" routerLinkActive="activenavbar" (click)="navtoPurchase()">Purchase Menu</button>
+  </mat-menu>
+  <button class="NavButton" routerLink="/Sale" routerLinkActive="activenavbar" (click)="navToSales()" mat-button>Sale</button>
+  
   <span class="fill-remaining-space"></span>
-
-  <button (click)="navtoImageUpload()" mat-icon-button  style="margin-right: 10px;">
-    <mat-icon  [matBadge]="imagesCount" matBadgeColor="warn">notification_important</mat-icon>
+  
+  <button (click)="navtoImageUpload()" routerLink="AddImages" routerLinkActive="activenavbar" mat-icon-button style="margin-right: 10px;">
+    <mat-icon [matBadge]="imagesCount" matBadgeColor="warn">notification_important</mat-icon>
   </button>
   <button mat-button>Log In</button>
   </mat-toolbar>

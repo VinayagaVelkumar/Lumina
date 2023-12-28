@@ -1,70 +1,6 @@
 <div class="container">
     <div class="box">
 
-        <div class="input-container">
-            <mat-form-field appearance="fill">
-                <mat-label>Product ID</mat-label>
-                <input matInput [(ngModel)]="productID" [readonly]="true">
-      </mat-form-field>
-    </div>
-  
-    
-      <div class="input-container">
-        <label>Select a Category</label>
-        <mat-form-field appearance="fill">
-          <mat-select>
-        @for(category of categories; track category.categoryID)
-        {
-      <mat-option (onSelectionChange)="onCategorySelected(category.categoryID)" [value]="category.categoryID">
-        {{ category.categoryName }}
-      </mat-option>
-    }
-    </mat-select>
-  </mat-form-field>
-</div>
-  
-<div class="input-container">
-    <label>Select a Color</label>
-  <mat-form-field>
-    <mat-select>
-        @for(color of colors; track color.colorID)
-        {
-      <mat-option (onSelectionChange)="onColorSelected(color.colorID)" [value]="color.colorID">
-        {{ color.colorName }}
-      </mat-option>
-    }
-    </mat-select>
-  </mat-form-field>
-</div>
-
-<div class="input-container">
-    <label>Select a Size</label>
-    <mat-form-field appearance="fill">
-    <mat-select>
-        @for(size of sizes; track size.sizeID)
-        {
-      <mat-option (onSelectionChange)="onSizeSelected(size.sizeID)" [value]="size.sizeID">
-        {{ size.size }}
-      </mat-option>
-    }
-    </mat-select>
-  </mat-form-field>
-</div>
-
-<div class="input-container">
-  <label>Select a Tag</label>
-  <mat-form-field appearance="fill">
-  <mat-select>
-      @for(tag of tags; track tag.tagID)
-      {
-    <mat-option (onSelectionChange)="onTagSelected(tag.tagID)" [value]="tag.tagID">
-      {{ tag.tagName }}
-    </mat-option>
-  }
-  </mat-select>
-</mat-form-field>
-</div>
-
 <div class="input-container">
   <label>Count</label>
   <mat-form-field appearance="fill">
@@ -73,28 +9,16 @@
 </div>
 
 <div class="input-container">
-  <label>Purchase Price</label>
+  <label>Sold Price</label>
   <mat-form-field appearance="fill">
-    <input matInput placeholder="Purchase Price" #input [(ngModel)]="purPrice">
-</mat-form-field>
-</div>
-
-<div class="input-container">
-  <label>Discount</label>
-  <mat-form-field appearance="fill">
-    <input matInput placeholder="Discount" #input [(ngModel)]="discount">
-</mat-form-field>
-</div>
-
-<div class="input-container">
-  <label>MRP</label>
-  <mat-form-field appearance="fill">
-    <input matInput placeholder="MRP" #input [(ngModel)]="mrp">
+    <input matInput placeholder="Purchase Price" #input [(ngModel)]="soldPrice">
 </mat-form-field>
 </div>
 
 <div class="input-container" style="text-align: center;">
-    <button mat-raised-button (click)="addPurchase()" color="primary">Submit</button>
+    <button mat-raised-button (click)="addSale()" color="primary">Submit</button>
+
+    <button mat-raised-button style="margin-left: 10px;" (click)="closeDialog()" color="primary">Cancel</button>
   </div>
 </div>
 </div>

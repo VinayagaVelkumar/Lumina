@@ -7,10 +7,15 @@
   }
 
 .NavButton{
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 button:hover
 {
   background-color: #02063b;
+}
+
+.activenavbar {
+  background-color: #02063b; /* Change this to your desired highlight color */
+  color: white; /* Change this to your desired text color */
 }

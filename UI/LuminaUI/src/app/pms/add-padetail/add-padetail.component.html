@@ -40,10 +40,10 @@
 <div class="input-container">
     <label>Select a Size</label>
     <mat-form-field appearance="fill">
-    <mat-select>
-        @for(size of sizes; track size.sizeID)
+    <mat-select [(ngModel)]="selectedSizes" multiple>
+        @for(size of sizes; track trackBySizeID)
         {
-      <mat-option (onSelectionChange)="onSizeSelected(size.sizeID)" [value]="size.sizeID">
+      <mat-option [value]="size.sizeID">
         {{ size.size }}
       </mat-option>
     }

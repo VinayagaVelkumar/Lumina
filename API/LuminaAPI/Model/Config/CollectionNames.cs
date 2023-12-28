@@ -18,5 +18,7 @@
         public string Purchase { get; set; }
 
         public string ImageFolder { get; set; }
+
+        public string Sale { get; set; }
     }
 }

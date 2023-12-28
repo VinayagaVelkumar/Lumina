@@ -1,78 +1,32 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace LuminaAPI.Model.SLMS
 {
     public class SaleDetail
     {
-        // Private properties
-        private int saleID;
-        private int productID;
-        private int padID;
-        private DateTime saleDate;
-        private int count;
-        private int soldPrice;
-        private int mrp;
-        private int userID;
-        private int purchasedPrice;
-        private ObjectId id;
 
-        public ObjectId _id
-        { get { return id; } }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; set; }
 
-        // Public properties
-        public int SaleID
-        {
-            get { return this.saleID; }
-            set { this.saleID = value; }
-        }
+        public string ProductID { get; set; }
 
-        public int ProductID
-        {
-            get { return this.productID; }
-            set { this.productID = value; }
-        }
+        public string PadID { get; set; }
 
-        public int PadID
-        {
-            get { return this.padID; }
-            set { this.padID = value; }
-        }
+        public DateTime SaleDate { get; set; }
 
-        public DateTime SaleDate
-        {
-            get { return this.saleDate; }
-            set { this.saleDate = value; }
-        }
+        public int Count { get; set; }
 
-        public int Count
-        {
-            get { return this.count; }
-            set { this.count = value; }
-        }
+        public int PreviousCount { get; set; }
 
-        public int SoldPrice
-        {
-            get { return this.soldPrice; }
-            set { this.soldPrice = value; }
-        }
+        public int SoldPrice { get; set; }
 
-        public int MRP
-        {
-            get { return this.mrp; }
-            set { this.mrp = value; }
-        }
+        public int MRP { get; set; }
 
-        public int UserID
-        {
-            get { return this.userID; }
-            set { this.userID = value; }
-        }
+        public int UserID { get; set; }
 
-        public int PurchasedPrice
-        {
-            get { return this.purchasedPrice; }
-            set { this.purchasedPrice = value; }
-        }
+        public int PurchasedPrice { get; set; }
     }
 
 }
