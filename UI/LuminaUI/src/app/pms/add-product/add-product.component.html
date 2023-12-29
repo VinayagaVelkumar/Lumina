@@ -1,17 +1,17 @@
 <div class="container">
     <div class="box">
-
+<form #prForm="ngForm">
         <div class="input-container">
             <mat-form-field appearance="fill">
                 <mat-label>Product ID</mat-label>
-                <input matInput [(ngModel)]="productID">
+                <input matInput [(ngModel)]="productID" name="productID" required>
       </mat-form-field>
     </div>
     
     <div class="input-container">
         <mat-form-field appearance="fill">
             <mat-label>Product Name</mat-label>
-            <input matInput [(ngModel)]="productName">
+            <input matInput [(ngModel)]="productName" name="productName" required>
   </mat-form-field>
 </div>
   
@@ -19,7 +19,7 @@
       <div class="input-container">
         <label>Select a Brand</label>
         <mat-form-field appearance="fill">
-          <mat-select>
+          <mat-select [(ngModel)]="selectedBrand" name="brandName" required>
         @for(brand of brands; track brand.brandID)
         {
       <mat-option (onSelectionChange)="onBrandSelected(brand.brandID)" [value]="brand.brandID">
@@ -32,8 +32,8 @@
   
 <div class="input-container">
     <label>Select a Model</label>
-  <mat-form-field>
-    <mat-select>
+  <mat-form-field appearance="fill">
+    <mat-select [(ngModel)]="selectedModel" name="ModelName" required>
         @for(model of models; track model.modelID)
         {
       <mat-option (onSelectionChange)="onModelSelected(model.modelID)" [value]="model.modelID">
@@ -45,7 +45,8 @@
 </div>
 
 <div class="input-container" style="text-align: center;">
-    <button mat-raised-button (click)="addProduct()" color="primary">Add Product</button>
+    <button mat-raised-button (click)="addProduct()" color="primary" [disabled]="!prForm.form.valid">Add Product</button>
   </div>
+</form>
 </div>
 </div>

@@ -20,5 +20,7 @@
         public string ImageFolder { get; set; }
 
         public string Sale { get; set; }
+
+        public string User { get; set; }
     }
 }

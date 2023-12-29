@@ -13,6 +13,7 @@
   <button (click)="navtoImageUpload()" routerLink="AddImages" routerLinkActive="activenavbar" mat-icon-button style="margin-right: 10px;">
     <mat-icon [matBadge]="imagesCount" matBadgeColor="warn">notification_important</mat-icon>
   </button>
-  <button mat-button>Log In</button>
+  <button mat-button routerLink="Login" routerLinkActive="activenavbar" *ngIf="!isLoggedin">Log In</button>
+  <button mat-button (click)="logout()" *ngIf="isLoggedin">Log Out</button>
   </mat-toolbar>
   

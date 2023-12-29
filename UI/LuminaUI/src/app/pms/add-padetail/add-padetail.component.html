@@ -1,10 +1,10 @@
 <div class="container">
     <div class="box">
-
+<form #paForm="ngForm">
         <div class="input-container">
             <mat-form-field appearance="fill">
                 <mat-label>Product ID</mat-label>
-                <input matInput [(ngModel)]="productID" [readonly]="true">
+                <input matInput name="productID" [(ngModel)]="productID" [readonly]="true">
       </mat-form-field>
     </div>
   
@@ -12,7 +12,7 @@
       <div class="input-container">
         <label>Select a Category</label>
         <mat-form-field appearance="fill">
-          <mat-select>
+          <mat-select [(ngModel)]="selectedCategoryId" name="category" required>
         @for(category of categories; track category.categoryID)
         {
       <mat-option (onSelectionChange)="onCategorySelected(category.categoryID)" [value]="category.categoryID">
@@ -26,7 +26,7 @@
 <div class="input-container">
     <label>Select a Color</label>
   <mat-form-field>
-    <mat-select>
+    <mat-select [(ngModel)]="selectedColorId" name="Color" required>
         @for(color of colors; track color.colorID)
         {
       <mat-option (onSelectionChange)="onColorSelected(color.colorID)" [value]="color.colorID">
@@ -40,7 +40,7 @@
 <div class="input-container">
     <label>Select a Size</label>
     <mat-form-field appearance="fill">
-    <mat-select [(ngModel)]="selectedSizes" multiple>
+    <mat-select [(ngModel)]="selectedSizes" multiple required name="Size" required>
         @for(size of sizes; track trackBySizeID)
         {
       <mat-option [value]="size.sizeID">
@@ -54,7 +54,7 @@
 <div class="input-container">
   <label>Select a Tag</label>
   <mat-form-field appearance="fill">
-  <mat-select>
+  <mat-select [(ngModel)]="tagID" name="Tag" required>
       @for(tag of tags; track tag.tagID)
       {
     <mat-option (onSelectionChange)="onTagSelected(tag.tagID)" [value]="tag.tagID">
@@ -68,33 +68,35 @@
 <div class="input-container">
   <label>Count</label>
   <mat-form-field appearance="fill">
-    <input matInput placeholder="Count" #input [(ngModel)]="count">
+    <input  name="Count" matInput placeholder="Count" #input [(ngModel)]="count" required>
 </mat-form-field>
 </div>
 
 <div class="input-container">
   <label>Purchase Price</label>
   <mat-form-field appearance="fill">
-    <input matInput placeholder="Purchase Price" #input [(ngModel)]="purPrice">
+    <input name="purPrice" matInput placeholder="Purchase Price" #input [(ngModel)]="purPrice" required>
 </mat-form-field>
 </div>
 
 <div class="input-container">
   <label>Discount</label>
   <mat-form-field appearance="fill">
-    <input matInput placeholder="Discount" #input [(ngModel)]="discount">
+    <input name="discount" matInput placeholder="Discount" #input [(ngModel)]="discount" required>
 </mat-form-field>
 </div>
 
 <div class="input-container">
   <label>MRP</label>
   <mat-form-field appearance="fill">
-    <input matInput placeholder="MRP" #input [(ngModel)]="mrp">
+    <input name="mrp" matInput placeholder="MRP" #input [(ngModel)]="mrp" required>
 </mat-form-field>
 </div>
 
 <div class="input-container" style="text-align: center;">
-    <button mat-raised-button (click)="addPurchase()" color="primary">Submit</button>
+    <button mat-raised-button (click)="addPurchase()" color="primary" [disabled]="!paForm.form.valid">Submit</button>
   </div>
+
+</form>
 </div>
 </div>

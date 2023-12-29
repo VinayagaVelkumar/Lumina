@@ -1,24 +1,17 @@
 import { Component } from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import { PMSService } from '../../shared/Services/pms.service';
 import { Category } from '../../shared/Models/Category';
 import { Model } from '../../shared/Models/Model';
 import { Size } from '../../shared/Models/Size';
-import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { ProductFilter } from '../../shared/Models/ProductFilter';
+import { CommonService } from '../../shared/Services/common.service';
 
 @Component({
   selector: 'app-productfilter',
-  standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule,HttpClientModule,MatButtonModule],
+  standalone: false,
   templateUrl: './productfilter.component.html',
-  styleUrl: './productfilter.component.css',
-  providers: [PMSService]
+  styleUrl: './productfilter.component.css'
 })
 export class ProductfilterComponent {
   categories: Category[] = [];
@@ -29,11 +22,12 @@ export class ProductfilterComponent {
   selectedSizeId: number =0;
   defModel:Model =  new Model(0, 'Any', true);
 
-  constructor(private pmsService: PMSService  ,private router: Router) {}
+  constructor(private pmsService: PMSService  ,private router: Router,private commonService:CommonService) {}
   
   ngOnInit() {
     this.getCategories();
     this.getModels();
+    this.commonService.setImagesCount(0); //initializing call to controller
   }
 
   getCategories() {

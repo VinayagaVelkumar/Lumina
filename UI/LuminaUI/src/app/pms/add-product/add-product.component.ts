@@ -16,17 +16,15 @@ import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-product',
-  standalone: true,
-  imports: [FormsModule, MatInputModule, MatSelectModule, MatFormFieldModule,HttpClientModule,MatButtonModule,MatSnackBarModule],
+  standalone: false,
   templateUrl: './add-product.component.html',
-  styleUrl: './add-product.component.css',
-  providers: [PMSService,PrmsService]
+  styleUrl: './add-product.component.css'
 })
 export class AddProductComponent {
   brands: Brand[] = [];
   models: Model[] = [];
-  selectedBrand:number = 0;
-  selectedModel: number =0;
+  selectedBrand:string = '';
+  selectedModel: string ='';
   productID: string = '';
   productName: string = '';
   constructor(private pmsService: PMSService  ,private router: Router, private prmsService: PrmsService,private imageCompress: NgxImageCompressService, private snackBar: MatSnackBar) {}
@@ -49,11 +47,11 @@ export class AddProductComponent {
   }
 
   onBrandSelected(brandId: number) {
-    this.selectedBrand = brandId;
+    this.selectedBrand = brandId.toString();
   }
 
   onModelSelected(modelID: number) {
-    this.selectedModel = modelID;
+    this.selectedModel = modelID.toString();
   }
 
   openSuccessMessage(message: string): void {
@@ -70,8 +68,8 @@ addProduct()
     _id: '',
     productID: this.productID,
     productName: this.productName,
-    brandID: this.selectedBrand,
-    modelID: this.selectedModel,
+    brandID: parseInt(this.selectedBrand),
+    modelID: parseInt(this.selectedModel),
     isActive: true,
     brand: '',
     model:''

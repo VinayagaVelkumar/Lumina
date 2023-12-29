@@ -3,8 +3,9 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { httpInterceptorProviders } from './shared/Services/interceptors/token-interceptor.service';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAnimations()],
+  providers: [provideRouter(routes), provideAnimations(), httpInterceptorProviders],
 };
 

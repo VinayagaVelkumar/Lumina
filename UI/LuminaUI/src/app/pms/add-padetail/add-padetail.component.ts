@@ -13,31 +13,30 @@ import { PrmsService } from '../../shared/Services/prms.service';
 import { Color } from '../../shared/Models/Color';
 import { Tag } from '../../shared/Models/Tag';
 import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
+import { CommonService } from '../../shared/Services/common.service';
 
 @Component({
   selector: 'app-add-padetail',
-  standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule,HttpClientModule,MatButtonModule,MatSnackBarModule],
+  standalone: false,
   templateUrl: './add-padetail.component.html',
-  styleUrl: './add-padetail.component.css',
-  providers: [PMSService,PrmsService]
+  styleUrl: './add-padetail.component.css'
 })
 export class AddPADetailComponent {
   categories: Category[] = [];
   sizes: Size[] = [];
   colors: Color[] = [];
   tags: Tag[] =[];
-  selectedCategoryId:number = 0;
+  selectedCategoryId:string = '';
   selectedSizes: number[] = [];
-  selectedColorId: Number =0;
-  mrp:number =0;
-  count:number =0;
-  purPrice:number =0;
-  discount:number =0;
-  tagID:number =0;
+  selectedColorId: string ='';
+  mrp:string ='';
+  count:string ='';
+  purPrice:string ='';
+  discount:string ='';
+  tagID:string ='';
 
   productID: string = '';
-  constructor(private pmsService: PMSService  ,private router: Router, private prmsService: PrmsService,private snackBar:MatSnackBar) {}
+  constructor(private pmsService: PMSService ,private commonService:CommonService ,private router: Router, private prmsService: PrmsService,private snackBar:MatSnackBar) {}
   
   ngOnInit() {
     this.getCategories();
@@ -65,17 +64,17 @@ export class AddPADetailComponent {
   }
 
   onCategorySelected(categoryId: number) {
-    this.selectedCategoryId = categoryId;
+    this.selectedCategoryId = categoryId.toString();
     this.getSizes(categoryId);
   }
 
 
   onColorSelected(colorID: number) {
-    this.selectedColorId = colorID;
+    this.selectedColorId = colorID.toString();
   }
 
   onTagSelected(tagID: number) {
-    this.tagID = tagID;
+    this.tagID = tagID.toString();
   }
 
   getSizes(categoryId: number) {
@@ -101,19 +100,20 @@ addPurchase()
 {
   const data = {
     ProductID: this.productID,
-    CategoryId: this.selectedCategoryId,
+    CategoryId: parseInt(this.selectedCategoryId),
     SizeIDs: this.selectedSizes,
-    ColorId: this.selectedColorId,
-    MRP: this .pmsService.removeLeadingZeros(this.mrp),
-    Count: this .pmsService.removeLeadingZeros(this.count),
-    PurchasePrice: this .pmsService.removeLeadingZeros(this.purPrice),
-    DiscountCode: this .pmsService.removeLeadingZeros(this.discount),
-    TagID: this.tagID
+    ColorId: parseInt(this.selectedColorId),
+    MRP: this .pmsService.removeLeadingZeros(parseInt(this.mrp)),
+    Count: this .pmsService.removeLeadingZeros(parseInt(this.count)),
+    PurchasePrice: this .pmsService.removeLeadingZeros(parseInt(this.purPrice)),
+    DiscountCode: this .pmsService.removeLeadingZeros(parseInt(this.discount)),
+    TagID: parseInt(this.tagID)
   };
 
   this.prmsService.addPurchase(data).subscribe(
     (response) => {
       this.openSuccessMessage('Successfully Saved !')
+      this.commonService.setImagesCount(0);
       this.router.navigate(['Purchase'])
     },
     (error) => {

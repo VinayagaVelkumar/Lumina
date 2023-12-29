@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import { PAList } from '../shared/Models/PAList';
-import { HttpClientModule } from '@angular/common/http';
-import { PrmsService } from '../shared/Services/prms.service';
-import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { SlmsService } from '../shared/Services/slms.service';
 import { PMSService } from '../shared/Services/pms.service';
@@ -14,11 +9,9 @@ import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-slms',
-  standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule,HttpClientModule,MatButtonModule,AddSaleComponent, MatDialogModule],
+  standalone: false,
   templateUrl: './slms.component.html',
-  styleUrl: './slms.component.css',
-  providers:[PrmsService,SlmsService,PMSService]
+  styleUrl: './slms.component.css'
 })
 export class SLMSComponent {
   constructor (private pmsService: PMSService,private router: Router, private slmsService:SlmsService,public dialog: MatDialog) {}

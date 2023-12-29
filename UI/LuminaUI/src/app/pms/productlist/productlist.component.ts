@@ -11,11 +11,9 @@ import { ProductFilter } from '../../shared/Models/ProductFilter';
 
 @Component({
   selector: 'app-productlist',
-  standalone: true,
-  imports: [MatCardModule, MatButtonModule,MatGridListModule,HttpClientModule],
+  standalone: false,
   templateUrl: './productlist.component.html',
   styleUrl: './productlist.component.css',
-  providers:[PMSService]
 })
 
 export class ProductlistComponent {

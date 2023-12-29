@@ -1,30 +1,24 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatBadgeModule } from '@angular/material/badge';
-import {MatSelectModule} from '@angular/material/select';
-import {MatMenuModule} from '@angular/material/menu';
-import { Router,ActivatedRoute,RouterModule  } from '@angular/router';
+import { Router,ActivatedRoute  } from '@angular/router';
 import { CommonService } from '../shared/Services/common.service';
-import { HttpClientModule } from '@angular/common/http';
-import { HighlightActiveDirective } from '../shared/Directives/highlight-active.directive';
+import { Observable } from 'rxjs';
+import { AuthService } from '../shared/Services/auth.service';
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
-  imports: [MatToolbarModule,MatButtonModule,MatIconModule,MatBadgeModule,HttpClientModule,MatSelectModule,MatMenuModule,RouterModule,HighlightActiveDirective],
+  standalone: false,
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css',
-  providers: [CommonService]
+  styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
   imagesCount:string = '';
-  constructor(private router:Router, private commonService: CommonService, private route: ActivatedRoute,private el: ElementRef, private renderer: Renderer2)
+  isLoggedin:boolean = false;
+  constructor(private router:Router, private authService:AuthService,private commonService: CommonService, private route: ActivatedRoute,private el: ElementRef, private renderer: Renderer2)
   {
 
   }
   ngOnInit(): void {  
+   this.commonService.setImagesCount(0); //initializing call to controller
    this.commonService.imagesCount$.subscribe((count) => {
     if(count == 0)
     {
@@ -35,7 +29,10 @@ export class NavbarComponent {
     this.imagesCount = count.toString();
     }
   });
-  this.commonService.setImagesCount(0);
+
+  this.authService.isLoggedIn$.subscribe((result) => {
+    this.isLoggedin = result;
+  });
   }
 
   removeClass() {
@@ -65,5 +62,12 @@ export class NavbarComponent {
   navToSales() {
     this.removeClass();
     this.router.navigate(['Sale']);
+  }
+
+  logout()
+  {
+       localStorage.removeItem('token');
+       this.authService.setLoggedIn(false);
+       this.router.navigate(['Login']);
   }
 }

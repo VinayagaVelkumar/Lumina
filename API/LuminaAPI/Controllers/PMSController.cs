@@ -2,14 +2,17 @@
 using LuminaAPI.Model.Config;
 using LuminaAPI.Model.PMS;
 using LuminaAPI.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using System.Security.Claims;
 
 namespace LuminaAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class PMSController : ControllerBase
     {
         private readonly IPMSService _pmsService;
@@ -234,7 +237,7 @@ namespace LuminaAPI.Controllers
                 List<PAList> pADetails = pMSBusiness.GetPAList(this._colorService, this._tagService, this._sizeService, this._categoryService);
                 if (pADetails != null && pADetails.Count > 0)
                 {
-                    pADetails = pADetails.Where(x => x.Count > 0).OrderByDescending(x => x.ProductID).OrderByDescending(x => x.SizeID).ToList();
+                    pADetails = pADetails.Where(x => x.Count > 0).OrderBy(x => x.CategoryID).ThenBy(x => x.ProductID).ThenBy(x=> x.ColorID).ThenBy(x => x.SizeID).ToList();
                 }
                 return pADetails;
             }

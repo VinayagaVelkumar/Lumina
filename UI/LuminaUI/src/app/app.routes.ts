@@ -9,16 +9,19 @@ import { ImageuploadComponent } from './pms/imageupload/imageupload.component';
 import { PAListComponent } from './pms/palist/palist.component';
 import { SLMSComponent } from './slms/slms.component';
 import { AddSaleComponent } from './slms/add-sale/add-sale.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './shared/Services/auth.guard';
 
 export const routes: Routes = [
-    { path: '', component: ProductfilterComponent },
-    { path:'Product/:productID', component: ProductComponent },
-    { path:'List', component: ProductlistComponent},
-    { path:'Purchase', component: PRMSComponent},
-    { path:'AddPADetail', component: AddPADetailComponent},
-    { path:'AddProduct', component: AddProductComponent},
-    { path:'AddImages', component: ImageuploadComponent},
-    { path:'Products', component: PAListComponent},
-    { path:'Sale', component: SLMSComponent},
-    { path:'AddSale', component: AddSaleComponent}
+    { path: '', component: ProductfilterComponent,canActivate:[AuthGuard] },
+    { path:'Product/:productID', component: ProductComponent,canActivate:[AuthGuard]},
+    { path:'List', component: ProductlistComponent,canActivate:[AuthGuard]},
+    { path:'Purchase', component: PRMSComponent,canActivate:[AuthGuard]},
+    { path:'AddPADetail', component: AddPADetailComponent,canActivate:[AuthGuard]},
+    { path:'AddProduct', component: AddProductComponent,canActivate:[AuthGuard]},
+    { path:'AddImages', component: ImageuploadComponent,canActivate:[AuthGuard]},
+    { path:'Products', component: PAListComponent,canActivate:[AuthGuard]},
+    { path:'Sale', component: SLMSComponent,canActivate:[AuthGuard]},
+    { path:'AddSale', component: AddSaleComponent,canActivate:[AuthGuard]},
+    { path:'Login', component: LoginComponent}
 ];

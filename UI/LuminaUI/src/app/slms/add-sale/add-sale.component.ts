@@ -20,8 +20,8 @@ import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
   providers: [SlmsService]
 })
 export class AddSaleComponent {
-  count:number =0;
-  soldPrice:number =0;
+  count:string ='';
+  soldPrice:string ='';
 
   productID: string = '';
   constructor(private snackBar: MatSnackBar, private slmsService: SlmsService,public dialogRef: MatDialogRef<AddSaleComponent>) {}
@@ -46,8 +46,8 @@ addSale()
 {
   const data = {
     padID: this.productID,
-    soldPrice: this.slmsService.removeLeadingZeros(this.soldPrice),   
-    Count: this.slmsService.removeLeadingZeros(this.count)
+    soldPrice: this.slmsService.removeLeadingZeros(parseInt(this.soldPrice)),   
+    Count: this.slmsService.removeLeadingZeros(parseInt(this.count))
   };
   
 

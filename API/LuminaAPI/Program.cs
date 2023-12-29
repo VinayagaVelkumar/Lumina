@@ -1,7 +1,10 @@
 using LuminaAPI.Model.Config;
 using LuminaAPI.Service;
 using LuminaAPI.Service.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,20 @@ builder.Host.UseSerilog((context, configuration) =>
 // Add services to the container.
 builder.Services.Configure<CollectionNames>(builder.Configuration.GetSection("CollectionNames"));
 builder.Services.Configure<ConnectionConfig>(builder.Configuration.GetSection("ConnectionConfig"));
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "LuminaAPI",
+            ValidAudience = "LuminaUI",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("LuminaSecretKeyForTheLuminaAPIJWTToken"))
+        };
+    });
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("myAppCors", policy =>
@@ -28,6 +45,7 @@ builder.Services.AddTransient<IPRMSService, PRMSService>();
 builder.Services.AddTransient<IPADService, PADService>();
 builder.Services.AddTransient<IPADTransService, PADTransService>();
 builder.Services.AddTransient<ISLMSService, SLMSService>();
+builder.Services.AddTransient<IUMSService, UMSService>();
 builder.Services.AddTransient<IAliasService, AliasService>();
 builder.Services.AddTransient<IColorService, ColorService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();

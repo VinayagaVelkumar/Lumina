@@ -11,11 +11,9 @@ import { PAList } from '../../shared/Models/PAList';
 
 @Component({
   selector: 'app-palist',
-  standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule,HttpClientModule,MatButtonModule,MatIconModule],
+  standalone: false,
   templateUrl: './palist.component.html',
-  styleUrl: './palist.component.css',
-  providers:[PMSService]
+  styleUrl: './palist.component.css'
 })
 export class PAListComponent {
   constructor (private pmsService: PMSService,private router: Router) {}

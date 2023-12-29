@@ -1,24 +1,25 @@
 <div class="container">
     <div class="box">
-
+<form #saleForm="ngForm">
 <div class="input-container">
   <label>Count</label>
   <mat-form-field appearance="fill">
-    <input matInput placeholder="Count" #input [(ngModel)]="count">
+    <input matInput placeholder="Count" #input name="count" [(ngModel)]="count" required>
 </mat-form-field>
 </div>
 
 <div class="input-container">
   <label>Sold Price</label>
   <mat-form-field appearance="fill">
-    <input matInput placeholder="Purchase Price" #input [(ngModel)]="soldPrice">
+    <input matInput placeholder="Sold Price" #input name="soldPrice" [(ngModel)]="soldPrice" required>
 </mat-form-field>
 </div>
 
 <div class="input-container" style="text-align: center;">
-    <button mat-raised-button (click)="addSale()" color="primary">Submit</button>
+    <button mat-raised-button (click)="addSale()" color="primary" [disabled]="!saleForm.form.valid">Submit</button>
 
     <button mat-raised-button style="margin-left: 10px;" (click)="closeDialog()" color="primary">Cancel</button>
   </div>
+  </form>
 </div>
 </div>

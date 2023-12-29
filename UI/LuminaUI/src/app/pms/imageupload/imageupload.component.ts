@@ -1,22 +1,19 @@
 import { Component } from '@angular/core';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatTableDataSource,   MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { PMSService } from '../../shared/Services/pms.service';
-import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { PAList } from '../../shared/Models/PAList';
 import { CommonService } from '../../shared/Services/common.service';
 
 @Component({
   selector: 'app-imageupload',
-  standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule,HttpClientModule,MatButtonModule,MatIconModule],
+  standalone: false,
   templateUrl: './imageupload.component.html',
-  styleUrl: './imageupload.component.css',
-  providers:[PMSService,CommonService]
+  styleUrl: './imageupload.component.css'
 })
 export class ImageuploadComponent {
   constructor (private pmsService: PMSService,private commonService:CommonService,private router: Router) {}
@@ -58,7 +55,8 @@ export class ImageuploadComponent {
             {
               if(result == true)
               {
-                window.location.reload();
+                this.commonService.setImagesCount(0); //initializing call to controller
+                this.getPAImageList();
               }
             }
             );
