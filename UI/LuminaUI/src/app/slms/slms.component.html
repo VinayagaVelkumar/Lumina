@@ -33,7 +33,7 @@
     
       <ng-container matColumnDef="image">
         <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-      <mat-cell *matCellDef="let element">  <button mat-raised-button  mat-button (click)="openDialog(element._id)" color="primary">Add Sale</button> </mat-cell>
+      <mat-cell *matCellDef="let element">  <button mat-raised-button  mat-button (click)="openDialog(element._id, element.productID, element.mrp,element.discount, element.count)" color="primary">Add Sale</button> </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

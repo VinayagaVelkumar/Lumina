@@ -1,5 +1,7 @@
-﻿using LuminaAPI.Model.PMS;
+﻿using LuminaAPI.Model.Config;
+using LuminaAPI.Model.PMS;
 using LuminaAPI.Model.PRMS;
+using LuminaAPI.Model.SLMS;
 using LuminaAPI.Service.Interface;
 
 namespace LuminaAPI.Business
@@ -77,6 +79,102 @@ namespace LuminaAPI.Business
                     bool createPurchase = this.pRMSService.Insert(purchaseDetail);
                 }
                 return true;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> UploadBillAsync(IFormFile file, TwilioConfig twilioConfig, DriveConfig driveConfig)
+        {
+            try
+            {
+                GoogleDriveBusiness googleDriveBusiness = new GoogleDriveBusiness(driveConfig);
+                var filePath = driveConfig.UploadFolder + file.FileName;
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+
+                // Upload the file to Google Drive
+                var driveLink = await googleDriveBusiness.UploadFile(filePath, file.FileName);
+                _ = Task.Run(async () =>
+                {
+
+                    if (driveLink != null)
+                    {
+
+                        var message = $"Here is the file: {driveLink}";
+                        WhatsappBusiness whatsappBusiness = new WhatsappBusiness(twilioConfig);
+                        await whatsappBusiness.SendMessage(message, driveLink);
+                    }
+                });
+                return true;
+                }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public List<BillPAList> GetBillPALists(List<string> billIDs, IColorService colorService, ISizeService sizeService, ICategoryService categoryService)
+        {
+            try
+            {
+                List<BillPAList> billPALists = new List<BillPAList>();
+                List<PADetail> pALists = this.pADService.GetAll().Where(x => billIDs.Contains(x._id)).ToList();
+                List<PurchaseDetail> purchases = this.pRMSService.GetAll().Where(x => billIDs.Contains(x.PadID)).ToList();
+                List<ColorDetail> colors = colorService.GetAll();
+                List<SizeDetail> sizes = sizeService.GetAll();
+                List<CategoryDetail> categories = categoryService.GetAll();
+
+                var joinedDetails = from padetail in pALists
+                                    join color in colors on padetail.ColorID equals color.ColorID
+                                    join category in categories on padetail.CategoryID equals category.CategoryID
+                                    join size in sizes on padetail.SizeID equals size.SizeID
+                                    join purchase in purchases on padetail._id equals purchase.PadID
+                                    select new
+                                    {
+                                        PADetail = padetail,
+                                        ColorName = color.ColorName,
+                                        CategoryName = category.CategoryName,
+                                        Price = purchase.PurchasePrice,
+                                        CategoryId = padetail.CategoryID
+                                    };
+
+                billPALists = joinedDetails.Select(j =>
+                       new BillPAList
+                       {
+                           _id = j.PADetail._id,
+                           ProductID = j.PADetail.ProductID,
+                           Category = j.CategoryName,
+                           Color = j.ColorName,
+                           LastPurchasePrice = j.Price,
+                           CategoryID = j.CategoryId
+                       }).ToList();
+
+                foreach(BillPAList bill in billPALists)
+                {
+                    List<SizeDetail> sizeDetails = sizes.Where(x => x.CategoryID == bill.CategoryID).ToList();
+                    bill.Count = sizeDetails.Count;
+                    bill.Sizes = string.Join(",", sizeDetails.Select(sd => sd.Size));
+                    bill.EstimatedPrice = bill.Count * bill.LastPurchasePrice;
+                }
+
+                int sumOfEstimatedPrices = billPALists.Sum(item => item.EstimatedPrice);
+
+
+                foreach (var item in billPALists)
+                {
+                    item.EstimatedTotalPrice = sumOfEstimatedPrices;
+                }
+
+                List<BillPAList> distinctList = billPALists.GroupBy(x => x._id).Select(group => group.First()).ToList();
+
+                billPALists = distinctList.GroupBy(x => new { x.ProductID, x.Category, x.Color, x.Count }).Select(group => group.First()).ToList();
+
+                return billPALists;
             }
             catch
             {

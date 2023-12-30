@@ -1,8 +1,12 @@
+.page-wrapper {
+  min-height: 100vh; /* 100% of the viewport height */
+  overflow-y: auto; /* Add a vertical scrollbar if necessary */
+}
+
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 25%;
   }
   
   .box {
@@ -12,9 +16,9 @@
     border-radius: 8px;
   }
   
-  .input-container {
-    margin-bottom: 16px;
-  }
+  /* .input-container {
+  
+  } */
   
   mat-form-field {
     width: 100%;

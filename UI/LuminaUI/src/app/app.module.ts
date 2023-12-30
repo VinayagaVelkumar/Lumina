@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
@@ -37,14 +37,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthGuard } from './shared/Services/auth.guard';
 import { httpInterceptorProviders } from './shared/Services/interceptors/token-interceptor.service';
+import { AddSaleComponent } from './slms/add-sale/add-sale.component';
+import { PreparepurchaseComponent } from './prms/preparepurchase/preparepurchase.component';
+import { BillComponent } from './prms/bill/bill.component';
+import { PdfExportService } from './shared/Services/pdf-export-service.service';
 
 
 @NgModule({
-  declarations: [AppComponent, ProductfilterComponent,ProductlistComponent,AddPADetailComponent,AddProductComponent,PAListComponent,PMSComponent,SLMSComponent,ImageuploadComponent,NavbarComponent,LoginComponent,],
+  declarations: [AppComponent, ProductfilterComponent,ProductlistComponent,AddPADetailComponent,AddProductComponent,PAListComponent,PMSComponent,SLMSComponent,ImageuploadComponent,NavbarComponent,LoginComponent,AddSaleComponent,
+  PreparepurchaseComponent, BillComponent],
   imports: [
     BrowserModule,BrowserAnimationsModule,NoopAnimationsModule,RouterModule.forRoot(routes),CommonModule,HttpClientModule,MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule,HttpClientModule,MatButtonModule,MatMenuModule,MatIconModule,MatToolbarModule,MatBadgeModule,RouterModule,MatCardModule,MatSnackBarModule,MatTableModule,MatDialogModule
   ],
-  providers:[PMSService,PrmsService,SlmsService,UmsService,CommonService,AuthService, httpInterceptorProviders],
+  providers:[PMSService,PrmsService,SlmsService,UmsService,CommonService,AuthService, httpInterceptorProviders, PdfExportService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

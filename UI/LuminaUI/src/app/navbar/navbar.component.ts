@@ -1,8 +1,8 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { Router,ActivatedRoute  } from '@angular/router';
 import { CommonService } from '../shared/Services/common.service';
-import { Observable } from 'rxjs';
 import { AuthService } from '../shared/Services/auth.service';
+import { PrmsService } from '../shared/Services/prms.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,26 +13,53 @@ import { AuthService } from '../shared/Services/auth.service';
 export class NavbarComponent {
   imagesCount:string = '';
   isLoggedin:boolean = false;
-  constructor(private router:Router, private authService:AuthService,private commonService: CommonService, private route: ActivatedRoute,private el: ElementRef, private renderer: Renderer2)
+  displayNotification:boolean = false;
+  cartCount:string = '';
+  displayCart:boolean =false;
+  constructor(private router:Router, private authService:AuthService,private commonService: CommonService, private route: ActivatedRoute,private el: ElementRef, private renderer: Renderer2, private prmsService:PrmsService)
   {
 
   }
   ngOnInit(): void {  
-   this.commonService.setImagesCount(0); //initializing call to controller
-   this.commonService.imagesCount$.subscribe((count) => {
-    if(count == 0)
-    {
-      this.imagesCount = '';
-    }
-    else
-    {
-    this.imagesCount = count.toString();
-    }
-  });
+ this.setImage();
+this.setCart();
+  }
 
-  this.authService.isLoggedIn$.subscribe((result) => {
-    this.isLoggedin = result;
-  });
+  setCart()
+  {
+    this.prmsService.menuProducts$.subscribe((menuProducts) => {
+     if(menuProducts.length == 0)
+     {
+       this.cartCount = '';
+       this.displayCart = false;
+     }
+     else
+     {
+     this.cartCount = menuProducts.length.toString();
+     this.displayCart = true;
+     }
+   });
+  }
+
+  setImage()
+  {
+    this.commonService.setImagesCount(0); //initializing call to controller
+    this.commonService.imagesCount$.subscribe((count) => {
+     if(count == 0)
+     {
+       this.imagesCount = '';
+       this.displayNotification = false;
+     }
+     else
+     {
+     this.imagesCount = count.toString();
+     this.displayNotification = true;
+     }
+   });
+ 
+   this.authService.isLoggedIn$.subscribe((result) => {
+     this.isLoggedin = result;
+   });
   }
 
   removeClass() {
@@ -62,6 +89,11 @@ export class NavbarComponent {
   navToSales() {
     this.removeClass();
     this.router.navigate(['Sale']);
+  }
+
+  navToBill() {
+    this.removeClass();
+    this.router.navigate(['Bill']);
   }
 
   logout()

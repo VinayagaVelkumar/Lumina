@@ -1,6 +1,6 @@
-export class PAList {
+export class SalePAList {
     public _id: string;
-    public productID: number;
+    public productID: string;
     public Category: string;
     public Size: String;
     public Color: string;
@@ -9,11 +9,13 @@ export class PAList {
     public colorID: number;
     public tagID:number;
     public tag:string;
-    public addedToBill:boolean
+    public MRP:number;
+    public Discount:number;
+    public Count:number;
   
     constructor(
       _id: string,
-      productID: number,
+      productID: string,
       category: string,
       size: string,
       color: string,
@@ -22,7 +24,9 @@ export class PAList {
       colorID: number,
       tagID:number,
       tag:string,
-      AddedToBill:boolean
+      mrp:number,
+      discount:number,
+      count:number
     ) {
       this._id = _id;
       this.productID = productID;
@@ -34,7 +38,9 @@ export class PAList {
       this.colorID = colorID;
       this.tag = tag;
       this.tagID = tagID;
-      this.addedToBill = AddedToBill
+      this.MRP = mrp;
+      this.Discount = discount;
+      this.Count = count;
     }
   }
   

@@ -234,7 +234,7 @@ namespace LuminaAPI.Controllers
             try
             {
                 PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
-                List<PAList> pADetails = pMSBusiness.GetPAList(this._colorService, this._tagService, this._sizeService, this._categoryService);
+                List<PAList> pADetails = pMSBusiness.GetPAList(this._colorService, this._tagService, this._sizeService, this._categoryService,0);
                 if (pADetails != null && pADetails.Count > 0)
                 {
                     pADetails = pADetails.Where(x => x.Count > 0).OrderBy(x => x.CategoryID).ThenBy(x => x.ProductID).ThenBy(x=> x.ColorID).ThenBy(x => x.SizeID).ToList();
@@ -297,6 +297,25 @@ namespace LuminaAPI.Controllers
             {
                 this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 throw;
+            }
+        }
+
+        [HttpGet(Name = "PreparePurchase")]
+        public List<PAList> PreparePurchase()
+        {
+            try
+            {
+                PMSBusiness pMSBusiness = new PMSBusiness(this._pmsService, this._padService, this._padTransService);
+                List<PAList> pADetails = pMSBusiness.GetPAList(this._colorService, this._tagService, this._sizeService, this._categoryService, -1);
+                if (pADetails != null && pADetails.Count > 0)
+                {
+                    pADetails = pADetails.OrderBy(x => x.Count).ToList();
+                }
+                return pADetails;
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError($"An error occurred: {ex.Message}\nStackTrace: {ex.StackTrace}"); throw; ;
             }
         }
 

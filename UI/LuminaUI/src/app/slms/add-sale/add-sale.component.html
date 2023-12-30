@@ -1,10 +1,40 @@
+<div class="page-wrapper">
 <div class="container">
     <div class="box">
 <form #saleForm="ngForm">
+
+  <div class="input-container">
+    <label>Product ID</label>
+    <mat-form-field appearance="fill">
+      <input matInput placeholder="ProductID" #input name="productid" [(ngModel)]="productID" [readonly]="true">
+  </mat-form-field>
+  </div>
+
+  <div class="input-container">
+    <label>MRP</label>
+    <mat-form-field appearance="fill">
+      <input matInput placeholder="mrp" #input name="mrp" [(ngModel)]="MRP" [readonly]="true">
+  </mat-form-field>
+  </div>
+
+  <div class="input-container">
+    <label>Discount</label>
+    <mat-form-field appearance="fill">
+      <input matInput placeholder="Discount" #input name="Discount" [(ngModel)]="Discount" [readonly]="true">
+  </mat-form-field>
+  </div>
+
+<div class="input-container">
+  <label>Available Number</label>
+  <mat-form-field appearance="fill">
+    <input matInput placeholder="Available Number" #input name="aNumber" [(ngModel)]="availableCount" [readonly]="true">
+</mat-form-field>
+</div>
+
 <div class="input-container">
   <label>Count</label>
   <mat-form-field appearance="fill">
-    <input matInput placeholder="Count" #input name="count" [(ngModel)]="count" required>
+    <input matInput placeholder="Count" #input name="count" [(ngModel)]="count" (change)="onCountChange()" [required]="true">
 </mat-form-field>
 </div>
 
@@ -21,5 +51,6 @@
     <button mat-raised-button style="margin-left: 10px;" (click)="closeDialog()" color="primary">Cancel</button>
   </div>
   </form>
+</div>
 </div>
 </div>

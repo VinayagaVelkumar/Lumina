@@ -1,5 +1,6 @@
 ﻿using LuminaAPI.Model.Config;
 using LuminaAPI.Model.PMS;
+using LuminaAPI.Model.SLMS;
 using LuminaAPI.Service;
 using LuminaAPI.Service.Interface;
 using MongoDB.Bson;
@@ -197,7 +198,7 @@ namespace LuminaAPI.Business
             }
         }
 
-        public List<PAList> GetPAList(IColorService colorService, ITagService tagService, ISizeService sizeService, ICategoryService categoryService)
+        public List<PAList> GetPAList(IColorService colorService, ITagService tagService, ISizeService sizeService, ICategoryService categoryService,int count)
         {
             try
             {
@@ -211,7 +212,7 @@ namespace LuminaAPI.Business
                 if (pADetails != null && pADetails.Count > 0)
                 {
                     List<string> objectIDs = pADetails.Select(x => x._id).ToList();
-                    List<PADTrans> pADTransacs = this._padTransService.GetAll().Where(x => objectIDs.Contains(x.PadID) && x.Count > 0).ToList();
+                    List<PADTrans> pADTransacs = this._padTransService.GetAll().Where(x => objectIDs.Contains(x.PadID) && x.Count > count).ToList();
 
                     var joinedDetails = from padetail in pADetails
                                         join color in colors on padetail.ColorID equals color.ColorID
@@ -254,11 +255,72 @@ namespace LuminaAPI.Business
             }
         }
 
+        public List<SalePAList> GetSalePAList(IColorService colorService, ITagService tagService, ISizeService sizeService, ICategoryService categoryService, int count)
+        {
+            try
+            {
+                List<SalePAList> paList = new List<SalePAList>();
+                List<ColorDetail> colors = this.GetColors(colorService);
+                List<TagDetail> tags = this.GetTags(tagService);
+                List<SizeDetail> sizes = this.GetAllSizes(sizeService);
+                List<CategoryDetail> categories = this.GetCategoryDetails(categoryService);
+                List<PADetail> pADetails = this._padService.GetAll();
+
+                if (pADetails != null && pADetails.Count > 0)
+                {
+                    List<string> objectIDs = pADetails.Select(x => x._id).ToList();
+                    List<PADTrans> pADTransacs = this._padTransService.GetAll().Where(x => objectIDs.Contains(x.PadID) && x.Count > count).ToList();
+
+                    var joinedDetails = from padetail in pADetails
+                                        join color in colors on padetail.ColorID equals color.ColorID
+                                        join category in categories on padetail.CategoryID equals category.CategoryID
+                                        join tag in tags on padetail.TagID equals tag.TagID
+                                        join size in sizes on padetail.SizeID equals size.SizeID
+                                        join padTrans in pADTransacs on padetail._id equals padTrans.PadID
+                                        select new
+                                        {
+                                            PADetail = padetail,
+                                            PADTransDetail = padTrans,
+                                            ColorName = color.ColorName,
+                                            CategoryName = category.CategoryName,
+                                            TagName = tag.TagName,
+                                            Size = size.Size,
+                                            Count = padTrans.Count
+                                        };
+
+                    paList = joinedDetails.Select(j =>
+                       new SalePAList
+                       {
+            
+                           _id = j.PADetail._id,
+                           ProductID = j.PADetail.ProductID,
+                           Category = j.CategoryName,
+                           Size = j.Size,
+                           Color = j.ColorName,
+                           Image = j.PADetail.Image,
+                           Tag = j.TagName,
+                           CategoryID = j.PADetail.CategoryID,
+                           ColorID = j.PADetail.ColorID,
+                           SizeID = j.PADetail.SizeID,
+                           TagID = j.PADetail.TagID,
+                           Count = j.Count,
+                           MRP = j.PADTransDetail.MRP,
+                           Discount = j.PADTransDetail.MRP - j.PADTransDetail.Price
+                       }).ToList();
+                }
+                return paList.OrderBy(x => x.ProductID).ToList();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public List<PAImageList> GetPAListWithoutImage(IColorService colorService, ITagService tagService, ISizeService sizeService, ICategoryService categoryService)
         {
             try
             {
-                List<PAList> list = this.GetPAList(colorService, tagService, sizeService, categoryService).Where(x => x.Image == null || x.Image == string.Empty).ToList();
+                List<PAList> list = this.GetPAList(colorService, tagService, sizeService, categoryService, 0).Where(x => x.Image == null || x.Image == string.Empty).ToList();
                 List<PAImageList> imageList = new List<PAImageList>();
                 if (list != null && list.Count > 0)
                 {

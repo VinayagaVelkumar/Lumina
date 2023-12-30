@@ -1,0 +1,16 @@
+.PDFContainer
+{
+    margin-top: 20px;
+    padding: 30px;
+}
+
+h1 {
+    text-align: center;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  

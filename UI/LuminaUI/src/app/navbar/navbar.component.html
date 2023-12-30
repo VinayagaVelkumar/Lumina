@@ -4,15 +4,20 @@
   <button class="NavButton" id="prButton" appHighlightActive mat-button [matMenuTriggerFor]="menu">Purchase</button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLink="/Purchase" routerLinkActive="activenavbar" (click)="navtoPurchase()">Add Purchase</button>
-    <button mat-menu-item  routerLink="/PurchaseMenu" routerLinkActive="activenavbar" (click)="navtoPurchase()">Purchase Menu</button>
+    <button mat-menu-item  routerLink="/PreparePurchase" routerLinkActive="activenavbar">Purchase Menu</button>
   </mat-menu>
   <button class="NavButton" routerLink="/Sale" routerLinkActive="activenavbar" (click)="navToSales()" mat-button>Sale</button>
   
   <span class="fill-remaining-space"></span>
   
-  <button (click)="navtoImageUpload()" routerLink="AddImages" routerLinkActive="activenavbar" mat-icon-button style="margin-right: 10px;">
-    <mat-icon [matBadge]="imagesCount" matBadgeColor="warn">notification_important</mat-icon>
+  <button  *ngIf="displayNotification && isLoggedin" (click)="navtoImageUpload()" routerLink="AddImages" routerLinkActive="activenavbar" mat-icon-button style="margin-right: 10px;">
+    <mat-icon  [matBadge]="imagesCount" matBadgeColor="warn">notification_important</mat-icon>
   </button>
+
+  <button *ngIf="displayCart  && isLoggedin" (click)="navToBill()" routerLink="AddImages" routerLinkActive="activenavbar" mat-icon-button style="margin-right: 10px;">
+    <mat-icon  [matBadge]="cartCount" matBadgeColor="warn">add_shopping_cart</mat-icon>
+  </button>
+
   <button mat-button routerLink="Login" routerLinkActive="activenavbar" *ngIf="!isLoggedin">Log In</button>
   <button mat-button (click)="logout()" *ngIf="isLoggedin">Log Out</button>
   </mat-toolbar>
