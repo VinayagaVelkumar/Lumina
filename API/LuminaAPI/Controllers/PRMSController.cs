@@ -24,11 +24,11 @@ namespace LuminaAPI.Controllers
         private readonly ISizeService _sizeService;
         private readonly CollectionNames _collectionNames;
         private readonly ConnectionConfig _connectionConfig;
-        private readonly DriveConfig _driveConfig;
+        private readonly ImageKitConfig _imagekitConfig;
         private readonly TwilioConfig _twilioConfig;
         private readonly ILogger<PRMSController> _logger;
 
-        public PRMSController(IPRMSService prmsService, IPMSService pMSService, IPADService padService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADTransService pADTransService, ILogger<PRMSController> logger, TwilioConfig twilioConfig, DriveConfig driveConfig, ICategoryService categoryService, IColorService colorService, ISizeService sizeService)
+        public PRMSController(IPRMSService prmsService, IPMSService pMSService, IPADService padService, CollectionNames collectionNames, ConnectionConfig connectionConfig, IPADTransService pADTransService, ILogger<PRMSController> logger, TwilioConfig twilioConfig, ImageKitConfig imagekitConfig, ICategoryService categoryService, IColorService colorService, ISizeService sizeService)
         {
 
             this._prmsService = prmsService;
@@ -37,7 +37,7 @@ namespace LuminaAPI.Controllers
             this._padTransService = pADTransService;
             this._collectionNames = collectionNames;
             this._connectionConfig = connectionConfig;
-            this._driveConfig = driveConfig;
+            this._imagekitConfig = imagekitConfig;
             this._twilioConfig = twilioConfig;
             this._colorService = colorService;
             this._categoryService = categoryService;
@@ -88,17 +88,17 @@ namespace LuminaAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadBillMenu(IFormFile file)
+        public async Task<bool> UploadBillMenu(IFormFile file)
         {
             try
             {
             if (file == null || file.Length == 0)
             {
-                return BadRequest("Invalid file");
+                    return false;
             }
                 PRMSBusiness pRMSBusiness = new PRMSBusiness(this._prmsService, this._pmsService, this._padService, this._padTransService);
-                await pRMSBusiness.UploadBillAsync(file, this._twilioConfig, this._driveConfig);
-                return Ok("File uploaded successfully");
+                await pRMSBusiness.UploadBillAsync(file, this._twilioConfig, this._imagekitConfig);
+                return true;
             }
             catch (Exception ex)
             {

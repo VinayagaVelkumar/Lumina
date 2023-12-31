@@ -2,15 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductList } from '../../shared/Models/ProductList';
 import { PMSService } from '../../shared/Services/pms.service';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-product',
-  standalone: true,
-  imports: [HttpClientModule],
+  standalone: false,
   templateUrl: './product.component.html',
   styleUrl: './product.component.css',
-  providers:[PMSService]
 })
 export class ProductComponent {
   receivedValue: string;
@@ -41,7 +38,6 @@ private loadProducts(): void {
       this.product = product;
     },
     (error) => {
-      console.error('Error loading products:', error);
     }
   );
 }

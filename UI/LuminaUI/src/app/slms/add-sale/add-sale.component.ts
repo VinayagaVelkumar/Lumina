@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SlmsService } from '../../shared/Services/slms.service';
 import {MatDialogRef} from '@angular/material/dialog';
-import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -65,7 +65,6 @@ addSale()
       this.openSuccessMessage('Successfully saved !')
     },
     (error) => {
-      console.error('Error sending data:', error);
     }
   );
 }

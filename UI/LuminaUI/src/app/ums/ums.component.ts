@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-ums',
-  standalone: true,
-  imports: [],
+  standalone: false,
   templateUrl: './ums.component.html',
   styleUrl: './ums.component.css'
 })

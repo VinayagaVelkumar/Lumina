@@ -1,9 +1,9 @@
 export class PAList {
     public _id: string;
     public productID: number;
-    public Category: string;
-    public Size: String;
-    public Color: string;
+    public category: string;
+    public size: string;
+    public color: string;
     public categoryID: number;
     public sizeID: number;
     public colorID: number;
@@ -26,9 +26,9 @@ export class PAList {
     ) {
       this._id = _id;
       this.productID = productID;
-      this.Category = category;
-      this.Size = size;
-      this.Color = color;
+      this.category = category;
+      this.size = size;
+      this.color = color;
       this.categoryID = categoryID;
       this.sizeID = sizeID;
       this.colorID = colorID;

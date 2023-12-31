@@ -1,20 +1,14 @@
 import { Component } from '@angular/core';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatTableDataSource} from '@angular/material/table';
 import { Product } from '../shared/Models/Product';
-import { HttpClientModule } from '@angular/common/http';
 import { PrmsService } from '../shared/Services/prms.service';
-import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-prms',
-  standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule,HttpClientModule,MatButtonModule],
+  standalone: false,
   templateUrl: './prms.component.html',
-  styleUrl: './prms.component.css',
-  providers:[PrmsService]
+  styleUrl: './prms.component.css'
 })
 export class PRMSComponent {
   

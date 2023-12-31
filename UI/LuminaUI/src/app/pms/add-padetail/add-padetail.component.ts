@@ -1,18 +1,12 @@
 import { Component } from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import { PMSService } from '../../shared/Services/pms.service';
 import { Category } from '../../shared/Models/Category';
 import { Size } from '../../shared/Models/Size';
-import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { PrmsService } from '../../shared/Services/prms.service';
 import { Color } from '../../shared/Models/Color';
 import { Tag } from '../../shared/Models/Tag';
-import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonService } from '../../shared/Services/common.service';
 
 @Component({
@@ -117,7 +111,6 @@ addPurchase()
       this.router.navigate(['Purchase'])
     },
     (error) => {
-      console.error('Error sending data:', error);
     }
   );
 }

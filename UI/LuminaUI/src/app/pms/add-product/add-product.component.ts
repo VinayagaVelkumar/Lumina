@@ -4,15 +4,9 @@ import { PMSService } from '../../shared/Services/pms.service';
 import {  Router } from '@angular/router';
 import { PrmsService } from '../../shared/Services/prms.service';
 import { Model } from '../../shared/Models/Model';
-import {FormsModule} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule } from '@angular/material/button';
 import {NgxImageCompressService} from 'ngx-image-compress';
 import { Product } from '../../shared/Models/Product';
-import { MatSnackBar,MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-product',
@@ -81,7 +75,6 @@ addProduct()
       this.router.navigate(['Purchase'])
     },
     (error) => {
-      console.error('Error sending data:', error);
     }
   );
 }

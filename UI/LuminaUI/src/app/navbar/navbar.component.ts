@@ -16,14 +16,21 @@ export class NavbarComponent {
   displayNotification:boolean = false;
   cartCount:string = '';
   displayCart:boolean =false;
+  userID:number = 0;
   constructor(private router:Router, private authService:AuthService,private commonService: CommonService, private route: ActivatedRoute,private el: ElementRef, private renderer: Renderer2, private prmsService:PrmsService)
   {
 
   }
   ngOnInit(): void {  
- this.setImage();
-this.setCart();
-  }
+         this.setImage();
+         var userID = localStorage.getItem('userID');
+         if(userID)
+         {
+         this.authService.setUserID(parseInt(userID));
+         }
+        this.setCart();
+        this.setUserID();
+          }
 
   setCart()
   {
@@ -39,6 +46,13 @@ this.setCart();
      this.displayCart = true;
      }
    });
+  }
+
+  setUserID()
+  {
+    this.authService.userIDSubject$.subscribe((userID) => {
+      this.userID = userID;
+    });
   }
 
   setImage()
@@ -65,6 +79,8 @@ this.setCart();
   removeClass() {
     const buttonToModify = this.el.nativeElement.querySelector('#prButton');
     this.renderer.removeClass(buttonToModify, 'activenavbar');
+    const slButton = this.el.nativeElement.querySelector('#slButton');
+    this.renderer.removeClass(slButton, 'activenavbar');
   }
 
   navtoHome() {
@@ -98,8 +114,11 @@ this.setCart();
 
   logout()
   {
+      
        localStorage.removeItem('token');
        this.authService.setLoggedIn(false);
+       this.authService.removeUserID();
+       localStorage.setItem('IsLoggedIn','false');
        this.router.navigate(['Login']);
   }
 }

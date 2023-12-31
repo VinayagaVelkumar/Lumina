@@ -35,7 +35,7 @@ export class PrmsService {
  ClearMenuCart()
  {
   localStorage.removeItem('menuProducts');
-  this.menuProductsSubject = new BehaviorSubject<string[]>([]);
+  this.menuProductsSubject.next([]);
   this.menuProducts$ = this.menuProductsSubject.asObservable();
  }
   getProducts(): Observable<Product[]> {

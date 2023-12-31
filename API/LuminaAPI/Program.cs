@@ -15,7 +15,7 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.Configure<CollectionNames>(builder.Configuration.GetSection("CollectionNames"));
 builder.Services.Configure<ConnectionConfig>(builder.Configuration.GetSection("ConnectionConfig"));
 builder.Services.Configure<TwilioConfig>(builder.Configuration.GetSection("TwilioConfig"));
-builder.Services.Configure<DriveConfig>(builder.Configuration.GetSection("DriveConfig"));
+builder.Services.Configure<ImageKitConfig>(builder.Configuration.GetSection("ImageKit"));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -43,7 +43,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddSingleton(builder.Configuration.GetSection("CollectionNames").Get<CollectionNames>());
 builder.Services.AddSingleton(builder.Configuration.GetSection("ConnectionConfig").Get<ConnectionConfig>());
 builder.Services.AddSingleton(builder.Configuration.GetSection("TwilioConfig").Get<TwilioConfig>());
-builder.Services.AddSingleton(builder.Configuration.GetSection("DriveConfig").Get<DriveConfig>());
+builder.Services.AddSingleton(builder.Configuration.GetSection("ImageKitConfig").Get<ImageKitConfig>());
 builder.Services.AddTransient<IPMSService, PMSService>();
 builder.Services.AddTransient<IPRMSService, PRMSService>();
 builder.Services.AddTransient<IPADService, PADService>();

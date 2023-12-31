@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import {MatTableDataSource,   MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import {MatTableDataSource} from '@angular/material/table';
 import { PMSService } from '../../shared/Services/pms.service';
 import { Router } from '@angular/router';
 import { PAList } from '../../shared/Models/PAList';

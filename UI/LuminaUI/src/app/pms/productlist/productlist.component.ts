@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatGridListModule} from '@angular/material/grid-list';
 import { ProductList } from '../../shared/Models/ProductList';
 import { Router } from '@angular/router';
 import { PMSService } from '../../shared/Services/pms.service';
-import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { ProductFilter } from '../../shared/Models/ProductFilter';
 
@@ -38,7 +34,6 @@ export class ProductlistComponent {
         this.Loading = false;
       },
       (error) => {
-        console.error('Error loading products:', error);
       }
     );
   }

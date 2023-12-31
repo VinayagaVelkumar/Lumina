@@ -35,17 +35,24 @@ import { AppComponent } from './app.component';
 import { routes } from './app.routes';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthGuard } from './shared/Services/auth.guard';
 import { httpInterceptorProviders } from './shared/Services/interceptors/token-interceptor.service';
 import { AddSaleComponent } from './slms/add-sale/add-sale.component';
 import { PreparepurchaseComponent } from './prms/preparepurchase/preparepurchase.component';
 import { BillComponent } from './prms/bill/bill.component';
 import { PdfExportService } from './shared/Services/pdf-export-service.service';
+import { ProductFilterPipe } from './shared/product-filter.pipe';
+import { SaleFilterPipe } from './shared/sale-filter.pipe';
+import { ProductComponent } from './pms/product/product.component';
+import { PRMSComponent } from './prms/prms.component';
+import { SalelistComponent } from './slms/salelist/salelist.component';
+import { UMSComponent } from './ums/ums.component';
+import { HighlightActiveDirective } from './shared/Directives/highlight-active.directive';
 
 
 @NgModule({
   declarations: [AppComponent, ProductfilterComponent,ProductlistComponent,AddPADetailComponent,AddProductComponent,PAListComponent,PMSComponent,SLMSComponent,ImageuploadComponent,NavbarComponent,LoginComponent,AddSaleComponent,
-  PreparepurchaseComponent, BillComponent],
+  PreparepurchaseComponent, BillComponent, ProductFilterPipe, SaleFilterPipe, ProductComponent, PRMSComponent, SalelistComponent,
+  UMSComponent, HighlightActiveDirective],
   imports: [
     BrowserModule,BrowserAnimationsModule,NoopAnimationsModule,RouterModule.forRoot(routes),CommonModule,HttpClientModule,MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule,HttpClientModule,MatButtonModule,MatMenuModule,MatIconModule,MatToolbarModule,MatBadgeModule,RouterModule,MatCardModule,MatSnackBarModule,MatTableModule,MatDialogModule
   ],

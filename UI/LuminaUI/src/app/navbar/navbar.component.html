@@ -6,8 +6,12 @@
     <button mat-menu-item routerLink="/Purchase" routerLinkActive="activenavbar" (click)="navtoPurchase()">Add Purchase</button>
     <button mat-menu-item  routerLink="/PreparePurchase" routerLinkActive="activenavbar">Purchase Menu</button>
   </mat-menu>
-  <button class="NavButton" routerLink="/Sale" routerLinkActive="activenavbar" (click)="navToSales()" mat-button>Sale</button>
-  
+  <!-- <button class="NavButton" routerLink="/Sale" routerLinkActive="activenavbar" (click)="navToSales()" mat-button>Sale</button> -->
+  <button class="NavButton" id="slButton" appHighlightActive mat-button [matMenuTriggerFor]="salemenu">Sale</button>
+  <mat-menu #salemenu="matMenu">
+    <button mat-menu-item routerLink="/Sale" routerLinkActive="activenavbar" >Add Sale</button>
+    <button mat-menu-item *ngIf="userID == 1001 || userID == 1002" routerLink="/SaleReport" routerLinkActive="activenavbar">Sale Report</button>
+  </mat-menu>
   <span class="fill-remaining-space"></span>
   
   <button  *ngIf="displayNotification && isLoggedin" (click)="navtoImageUpload()" routerLink="AddImages" routerLinkActive="activenavbar" mat-icon-button style="margin-right: 10px;">

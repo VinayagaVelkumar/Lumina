@@ -45,7 +45,7 @@ namespace LuminaAPI.Controllers
                 if (user != null)
                 {
                     var token = GenerateJwtToken(user);
-                    return Ok(new { token });
+                    return Ok(new { token, userId = user.UserID });
                 }
 
                 return Unauthorized();

@@ -86,19 +86,19 @@ namespace LuminaAPI.Business
             }
         }
 
-        public async Task<bool> UploadBillAsync(IFormFile file, TwilioConfig twilioConfig, DriveConfig driveConfig)
+        public async Task<bool> UploadBillAsync(IFormFile file, TwilioConfig twilioConfig, ImageKitConfig imageKit)
         {
             try
             {
-                GoogleDriveBusiness googleDriveBusiness = new GoogleDriveBusiness(driveConfig);
-                var filePath = driveConfig.UploadFolder + file.FileName;
+                ImageKitBusiness imageKitBusiness = new ImageKitBusiness(imageKit);
+                var filePath = imageKit.UploadFolder + file.FileName;
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream);
                 }
 
                 // Upload the file to Google Drive
-                var driveLink = await googleDriveBusiness.UploadFile(filePath, file.FileName);
+                var driveLink = await imageKitBusiness.UploadFile(filePath, file.FileName);
                 _ = Task.Run(async () =>
                 {
 

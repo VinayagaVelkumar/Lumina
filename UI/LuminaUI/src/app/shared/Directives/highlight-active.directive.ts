@@ -2,7 +2,7 @@ import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appHighlightActive]',
-  standalone: true
+  standalone: false
 })
 export class HighlightActiveDirective {
 

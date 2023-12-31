@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PMSService } from '../../shared/Services/pms.service';
 import { Router } from '@angular/router';
 import { PAList } from '../../shared/Models/PAList';
 import { MatTableDataSource } from '@angular/material/table';
